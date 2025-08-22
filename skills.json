@@ -1,0 +1,58 @@
+[
+    {
+        "name": "Data Analysis",
+        "icon": "assets/images/skills/skills image/Data analysis.png"
+    },
+    {
+        "name": "Customer Engagement",
+        "icon": "skills image/customer-engagement.webp"
+    },
+    {
+        "name": "Business Intelligence",
+        "icon": "skills image/BI.jpg"
+    },
+    {
+        "name": "No-Code AI Tools",
+        "icon": "skills image/no coe ai.jpg"
+    },
+    {
+        "name": "Search Engine optimization",
+        "icon": "skills image/seo.jpg"
+    },
+    {
+        "name": "Prompt Engineering",
+        "icon": "skills image/prompt.jpg"
+    },
+    {
+        "name": "SEMrush",
+        "icon": "skills image/sem.png"
+    },
+    {
+        "name": "Cisco networking",
+        "icon": "skills image/cisco net.jpg"
+    },
+    {
+        "name": "SLA",
+        "icon": "skills image/SLA.jpg"
+    },
+    {
+        "name": "Root cause analysis",
+        "icon": "skills image/root.jpg"
+    },
+    {
+        "name": "Tableau",
+        "icon": "skills image/tableau.png"
+    },
+    {
+        "name": "Python",
+        "icon": "skills image/python.jpg"
+    },
+    {
+        "name": "PostgreSQL",
+        "icon": "https://img.icons8.com/color/48/000000/postgreesql.png"
+    },
+    {
+        "name": "GitHub",
+        "icon": "https://img.icons8.com/glyph-neue/48/ffffff/github.png"
+    }
+]
