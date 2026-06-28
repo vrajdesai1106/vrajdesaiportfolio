@@ -1,188 +1,1327 @@
+Paste this exact code into a new GitHub file named **`film.html`**:
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VRAJ DESAI • THE OPENING ACT</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@400;500&amp;display=swap');
-  
-  body { font-family: 'Inter', system_ui, sans-serif; }
-  .font-cinematic { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; }
-  
-  .cinematic-bg {
-    background: radial-gradient(circle at 50% 30%, #1a1a1a 0%, #050505 70%);
-  }
-  
-  .film-grain {
-    position: relative;
-  }
-  .film-grain::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22/%3E%3C/filter%3E%3Crect width=%22300%22 height=%22300%22 filter=%22url(%23n)%22 opacity=%220.06%22/%3E%3C/svg%3E');
-    pointer-events: none;
-    z-index: 1;
-    animation: grain 0.8s steps(1) infinite;
-  }
-  
-  .scene {
-    scroll-snap-align: start;
-    min-height: 100vh;
-  }
-  
-  .movie-title {
-    font-size: clamp(3.5rem, 9vw, 7rem);
-    line-height: 0.9;
-    letter-spacing: -4px;
-  }
-</style>
-</head>
-<body class="bg-[#050505] text-white overflow-x-hidden">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Cinematic Top Bar -->
-  <div class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/10 px-6 py-4 flex items-center justify-between">
-    <div class="flex items-center gap-x-3">
-      <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center">
-        <i class="fa-solid fa-film text-black text-lg"></i>
+  <title>The Candidate File | Vraj Desai</title>
+
+  <meta name="description" content="Cinematic first-person portfolio experience for Vraj Desai." />
+  <meta name="theme-color" content="#030712" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg: #030712;
+      --cyan: #22d3ee;
+      --green: #22c55e;
+      --pink: #ec4899;
+      --amber: #f59e0b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --line: rgba(255,255,255,0.16);
+      --glass: rgba(3,7,18,0.76);
+      --radius: 28px;
+      --shadow: 0 35px 120px rgba(0,0,0,0.58);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+    }
+
+    button,
+    a {
+      font-family: inherit;
+    }
+
+    .portfolio-frame {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #030712;
+      z-index: 1;
+    }
+
+    .cinema-vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.52), transparent 22%, transparent 74%, rgba(0,0,0,0.58)),
+        radial-gradient(circle at center, transparent 42%, rgba(0,0,0,0.32));
+      opacity: 0;
+      transition: 0.7s ease;
+    }
+
+    .cinema-vignette.active {
+      opacity: 1;
+    }
+
+    .film-grain {
+      position: fixed;
+      inset: 0;
+      z-index: 21;
+      pointer-events: none;
+      opacity: 0.055;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .gate {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(34,211,238,0.26), transparent 34%),
+        radial-gradient(circle at 82% 78%, rgba(34,197,94,0.18), transparent 34%),
+        linear-gradient(135deg, rgba(0,0,0,0.96), rgba(3,7,18,0.97));
+      backdrop-filter: blur(24px);
+      transition: 0.8s ease;
+    }
+
+    .gate.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.045);
+    }
+
+    .gate-card {
+      width: min(94vw, 900px);
+      padding: 42px 38px;
+      border-radius: 40px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.055));
+      box-shadow: var(--shadow);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gate-card::before,
+    .gate-card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 18px;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(255,255,255,0.24) 0 12px,
+          transparent 12px 24px
+        );
+      opacity: 0.17;
+    }
+
+    .gate-card::before {
+      top: 0;
+    }
+
+    .gate-card::after {
+      bottom: 0;
+    }
+
+    .gate-scan {
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(120deg, transparent, rgba(34,211,238,0.28), transparent);
+      transform: translateX(-120%);
+      animation: gateScan 3.3s infinite;
+    }
+
+    @keyframes gateScan {
+      to {
+        transform: translateX(120%);
+      }
+    }
+
+    .gate-inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    .film-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(34,211,238,0.32);
+      background: rgba(34,211,238,0.08);
+      color: #bdf7ff;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.75rem;
+      font-weight: 950;
+      margin-bottom: 22px;
+    }
+
+    .film-logo {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 24px;
+      border-radius: 34px;
+      display: grid;
+      place-items: center;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 2.5rem;
+      font-weight: 950;
+      color: #04111b;
+      background:
+        radial-gradient(circle at 30% 22%, white 0 9%, transparent 10%),
+        linear-gradient(135deg, var(--cyan), var(--green));
+      box-shadow:
+        0 0 80px rgba(34,211,238,0.48),
+        inset 0 0 26px rgba(255,255,255,0.22);
+    }
+
+    .gate-card h1 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2.5rem, 7vw, 5.7rem);
+      line-height: 0.88;
+      letter-spacing: -0.09em;
+      margin-bottom: 18px;
+    }
+
+    .gate-card h1 span {
+      display: block;
+      background: linear-gradient(135deg, white, var(--cyan), var(--green));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .gate-card p {
+      max-width: 710px;
+      margin: 0 auto 28px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+
+    .gate-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      color: white;
+      background: rgba(255,255,255,0.08);
+      font-weight: 900;
+      cursor: pointer;
+      transition: 0.25s ease;
+      text-decoration: none;
+      font-size: 0.94rem;
+    }
+
+    .btn-primary {
+      border: none;
+      color: #02101a;
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      box-shadow: 0 20px 55px rgba(34,211,238,0.32);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 22px 60px rgba(0,0,0,0.38);
+    }
+
+    .gate-small {
+      margin-top: 18px;
+      color: #7f8da3;
+      font-size: 0.82rem;
+    }
+
+    .countdown {
+      position: fixed;
+      inset: 0;
+      z-index: 5200;
+      display: none;
+      place-items: center;
+      background: rgba(0,0,0,0.86);
+      backdrop-filter: blur(20px);
+    }
+
+    .countdown.active {
+      display: grid;
+    }
+
+    .count-number {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(5rem, 18vw, 14rem);
+      line-height: 1;
+      letter-spacing: -0.1em;
+      color: white;
+      text-shadow: 0 0 80px rgba(34,211,238,0.58);
+      animation: countPop 0.78s ease;
+    }
+
+    @keyframes countPop {
+      0% {
+        opacity: 0;
+        transform: scale(0.7);
+      }
+
+      45% {
+        opacity: 1;
+        transform: scale(1.08);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .top-scene {
+      position: fixed;
+      left: 22px;
+      top: 20px;
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(3,7,18,0.78);
+      backdrop-filter: blur(22px);
+      color: #c8f7ff;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 950;
+      opacity: 0;
+      transform: translateY(-14px);
+      transition: 0.38s ease;
+      box-shadow: 0 18px 55px rgba(0,0,0,0.35);
+    }
+
+    .top-scene.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .takeaway {
+      position: fixed;
+      top: 20px;
+      right: 22px;
+      z-index: 3000;
+      width: min(390px, calc(100vw - 34px));
+      padding: 16px;
+      border-radius: 22px;
+      border: 1px solid rgba(34,211,238,0.32);
+      background: rgba(3,7,18,0.84);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 26px 88px rgba(0,0,0,0.5);
+      transform: translateX(128%);
+      opacity: 0;
+      transition: 0.45s ease;
+    }
+
+    .takeaway.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .takeaway strong {
+      display: block;
+      color: var(--cyan);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 7px;
+    }
+
+    .takeaway p {
+      color: #ecf9ff;
+      font-size: 0.95rem;
+      font-weight: 850;
+      line-height: 1.45;
+    }
+
+    .dock {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%) translateY(150%);
+      z-index: 3100;
+      width: min(calc(100% - 30px), 980px);
+      padding: 15px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(3,7,18,0.86);
+      backdrop-filter: blur(28px);
+      box-shadow: 0 30px 95px rgba(0,0,0,0.52);
+      transition: 0.45s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .dock.active {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .dock-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 11px;
+    }
+
+    .speaker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .orb {
+      width: 50px;
+      height: 50px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 32% 25%, white 0 9%, transparent 10%),
+        linear-gradient(135deg, var(--cyan), var(--green));
+      color: #03111b;
+      box-shadow: 0 0 38px rgba(34,211,238,0.5);
+      position: relative;
+    }
+
+    .orb.speaking::before,
+    .orb.speaking::after {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1px solid rgba(34,211,238,0.58);
+      animation: pulse 1.24s infinite;
+    }
+
+    .orb.speaking::after {
+      inset: -17px;
+      animation-delay: 0.34s;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.92);
+        opacity: 0.9;
+      }
+
+      100% {
+        transform: scale(1.3);
+        opacity: 0;
+      }
+    }
+
+    .speaker-name {
+      font-weight: 950;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .speaker-name span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 3px;
+      white-space: normal;
+    }
+
+    .bars {
+      display: flex;
+      align-items: end;
+      gap: 4px;
+      height: 28px;
+      margin-left: 4px;
+    }
+
+    .bars span {
+      width: 4px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(var(--cyan), var(--green));
+      opacity: 0.42;
+    }
+
+    .bars.active span {
+      animation: bar 0.72s infinite ease-in-out;
+    }
+
+    .bars span:nth-child(2) {
+      animation-delay: 0.08s;
+    }
+
+    .bars span:nth-child(3) {
+      animation-delay: 0.16s;
+    }
+
+    .bars span:nth-child(4) {
+      animation-delay: 0.24s;
+    }
+
+    .bars span:nth-child(5) {
+      animation-delay: 0.32s;
+    }
+
+    @keyframes bar {
+      0%, 100% {
+        height: 7px;
+        opacity: 0.42;
+      }
+
+      50% {
+        height: 27px;
+        opacity: 1;
+      }
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .control-btn {
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .control-btn:hover,
+    .control-btn.active {
+      background: rgba(34,211,238,0.13);
+      border-color: rgba(34,211,238,0.36);
+    }
+
+    .subtitle {
+      min-height: 66px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.055);
+      padding: 14px 15px;
+      color: #eaf8ff;
+      font-weight: 760;
+      line-height: 1.55;
+    }
+
+    .progress-wrap {
+      height: 5px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.08);
+      margin-top: 12px;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--green), var(--pink));
+      box-shadow: 0 0 24px rgba(34,211,238,0.55);
+    }
+
+    .missing-audio {
+      position: fixed;
+      left: 50%;
+      top: 92px;
+      transform: translateX(-50%) translateY(-150%);
+      z-index: 3500;
+      max-width: min(720px, calc(100vw - 34px));
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(245,158,11,0.32);
+      background: rgba(3,7,18,0.88);
+      backdrop-filter: blur(20px);
+      color: #fff7ed;
+      box-shadow: 0 22px 70px rgba(0,0,0,0.45);
+      opacity: 0;
+      transition: 0.45s ease;
+      font-size: 0.92rem;
+      font-weight: 750;
+      text-align: center;
+    }
+
+    .missing-audio.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 760px) {
+      .gate-card {
+        padding: 34px 22px;
+      }
+
+      .dock-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .controls {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .control-btn {
+        flex: 1;
+      }
+
+      .takeaway {
+        left: 14px;
+        right: 14px;
+        top: 76px;
+        width: auto;
+      }
+
+      .top-scene {
+        left: 14px;
+        top: 14px;
+        max-width: calc(100vw - 28px);
+      }
+
+      .dock {
+        bottom: 14px;
+        width: calc(100% - 22px);
+      }
+
+      .subtitle {
+        font-size: 0.92rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <iframe class="portfolio-frame" id="portfolioFrame" src="./reel.html" title="Vraj Desai Portfolio"></iframe>
+
+  <audio id="candidateAudio" preload="auto">
+    <source src="assets/audio/vraj-candidate-film.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="cinema-vignette" id="cinemaVignette"></div>
+  <div class="film-grain"></div>
+
+  <div class="gate" id="gate">
+    <div class="gate-card">
+      <div class="gate-scan"></div>
+
+      <div class="gate-inner">
+        <div class="film-label">
+          <i class="fa-solid fa-film"></i>
+          The Candidate File
+        </div>
+
+        <div class="film-logo">VD</div>
+
+        <h1>
+          Vraj Desai
+          <span>Candidate Film</span>
+        </h1>
+
+        <p>
+          Not a normal portfolio. A cinematic first-person walkthrough of my IT support journey,
+          field service experience, automation mindset, strengths, weakness, and why I am worth interviewing.
+        </p>
+
+        <div class="gate-actions">
+          <button class="btn btn-primary" id="startBtn">
+            <i class="fa-solid fa-play"></i>
+            Start Candidate Film
+          </button>
+
+          <button class="btn" id="silentBtn">
+            <i class="fa-solid fa-eye"></i>
+            View Without Audio
+          </button>
+        </div>
+
+        <div class="gate-small">
+          A single click starts the cinematic experience.
+        </div>
       </div>
-      <span class="font-cinematic text-2xl tracking-tighter">A VRAJ DESAI FILM</span>
-    </div>
-    
-    <div class="flex items-center gap-x-3">
-      <button onclick="playCinematicMonologue()" id="play-btn"
-              class="px-8 py-2.5 bg-white text-black font-semibold rounded-2xl flex items-center gap-x-2 hover:bg-[#00f5ff] active:scale-[0.985]">
-        <i class="fa-solid fa-play mr-1" id="play-icon"></i>
-        <span id="play-text">BEGIN THE FILM</span>
-      </button>
-      <button onclick="stopNarration()" class="px-5 py-2.5 border border-white/20 rounded-2xl hover:bg-white/5 text-sm">Stop</button>
     </div>
   </div>
 
-  <!-- OPENING SCENE (Movie Start) -->
-  <section class="scene flex items-center justify-center min-h-screen pt-16 cinematic-bg film-grain relative">
-    <div class="max-w-5xl text-center px-6 relative z-10">
-      <div class="uppercase tracking-[6px] text-xs mb-4 text-white/40">2026 • A PERSONAL STORY</div>
-      
-      <h1 class="font-cinematic movie-title mb-6">THE OPENING ACT</h1>
-      <p class="text-3xl text-white/80 max-w-2xl mx-auto mb-12">A story of systems, resilience, and the future I’m building.</p>
-      
-      <button onclick="playCinematicMonologue()" 
-              class="px-14 py-6 text-xl font-semibold border-2 border-white/60 hover:bg-white hover:text-black rounded-3xl flex items-center gap-x-4 mx-auto transition-all active:scale-[0.985]">
-        <i class="fa-solid fa-play text-2xl"></i>
-        <span>WATCH MY STORY</span>
-      </button>
-      
-      <p class="text-xs text-white/40 mt-8">Press spacebar to play • A continuous personal message</p>
-    </div>
-  </section>
+  <div class="countdown" id="countdown">
+    <div class="count-number" id="countNumber">3</div>
+  </div>
 
-  <!-- VISUAL SCENES (Film Sequences) -->
-  <section class="scene flex items-center bg-[#0a0a0a] px-6 py-20">
-    <div class="max-w-5xl mx-auto">
-      <div class="uppercase tracking-[4px] text-xs text-white/40 mb-3">ACT I • THE JOURNEY</div>
-      <h2 class="font-cinematic text-6xl tracking-tighter mb-8">Six years on the front lines.</h2>
-      <div class="max-w-3xl text-3xl text-white/90">From busy retail floors to Fortune 500 campuses — I’ve kept critical systems alive when it mattered most.</div>
-    </div>
-  </section>
+  <div class="top-scene" id="topScene">
+    <i class="fa-solid fa-clapperboard"></i>
+    <span id="sceneText">Scene 01 · Opening</span>
+  </div>
 
-  <section class="scene flex items-center bg-[#111] px-6 py-20">
-    <div class="max-w-5xl mx-auto">
-      <div class="uppercase tracking-[4px] text-xs text-white/40 mb-3">ACT II • THE CRAFT</div>
-      <h2 class="font-cinematic text-6xl tracking-tighter mb-8">I turn complexity into clarity.</h2>
-      <div class="max-w-3xl text-3xl text-white/90">Building AI automations that actually work. Delivering zero data loss. Managing hundreds of endpoints with precision.</div>
-    </div>
-  </section>
+  <div class="takeaway" id="takeaway">
+    <strong>HR Takeaway</strong>
+    <p id="takeawayText">Candidate story ready.</p>
+  </div>
 
-  <section class="scene flex items-center bg-[#0a0a0a] px-6 py-20">
-    <div class="max-w-5xl mx-auto">
-      <div class="uppercase tracking-[4px] text-xs text-white/40 mb-3">ACT III • THE TRUTH</div>
-      <h2 class="font-cinematic text-6xl tracking-tighter mb-8">My greatest strength is also my greatest challenge.</h2>
-      <div class="max-w-3xl text-3xl text-white/90">I am a perfectionist. I will spend extra hours making sure everything is flawless. That same drive is why I deliver results others only promise.</div>
-    </div>
-  </section>
+  <div class="missing-audio" id="missingAudio">
+    Voice file not found. Subtitles and cinematic mode are still running.
+  </div>
 
-  <section class="scene flex items-center justify-center bg-[#050505] px-6 py-20 min-h-[80vh]">
-    <div class="max-w-4xl text-center">
-      <div class="uppercase tracking-[4px] text-xs text-white/40 mb-4">FINAL ACT • THE INVITATION</div>
-      <h2 class="font-cinematic text-7xl tracking-tighter mb-8">This is why you should hire me.</h2>
-      <p class="text-3xl text-white/90 max-w-3xl mx-auto mb-12">I bring battle-tested field experience, modern automation skills, and an obsessive commitment to excellence. I don’t just fix problems — I build systems that prevent them.</p>
-      
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="mailto:vrajdesai10@gmail.com" class="px-12 py-5 bg-white text-black rounded-3xl font-semibold text-lg flex items-center justify-center gap-x-3 hover:bg-[#00f5ff]">Let’s Talk</a>
-        <a href="tel:+353861653233" class="px-12 py-5 border border-white/30 rounded-3xl font-semibold text-lg flex items-center justify-center gap-x-3">+353 86 165 3233</a>
+  <div class="dock" id="dock">
+    <div class="dock-top">
+      <div class="speaker">
+        <div class="orb" id="orb">
+          <i class="fa-solid fa-microphone-lines"></i>
+        </div>
+
+        <div class="speaker-name">
+          Vraj Desai
+          <span id="statusText">Candidate story ready</span>
+        </div>
+
+        <div class="bars" id="bars">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="control-btn" id="pauseBtn">
+          <i class="fa-solid fa-pause"></i>
+          Pause
+        </button>
+
+        <button class="control-btn" id="resumeBtn">
+          <i class="fa-solid fa-play"></i>
+          Resume
+        </button>
+
+        <button class="control-btn active" id="autoBtn">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          Auto Cinema
+        </button>
+
+        <button class="control-btn" id="restartBtn">
+          <i class="fa-solid fa-rotate-right"></i>
+          Restart
+        </button>
       </div>
     </div>
-  </section>
+
+    <div class="subtitle" id="subtitle">
+      Press “Start Candidate Film” to begin my story.
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+  </div>
 
   <script>
-    let synth = window.speechSynthesis;
-    let currentUtterance = null;
+    const frame = document.getElementById("portfolioFrame");
+    const audio = document.getElementById("candidateAudio");
+    const gate = document.getElementById("gate");
+    const startBtn = document.getElementById("startBtn");
+    const silentBtn = document.getElementById("silentBtn");
+    const countdown = document.getElementById("countdown");
+    const countNumber = document.getElementById("countNumber");
+    const cinemaVignette = document.getElementById("cinemaVignette");
+    const dock = document.getElementById("dock");
+    const orb = document.getElementById("orb");
+    const bars = document.getElementById("bars");
+    const subtitle = document.getElementById("subtitle");
+    const statusText = document.getElementById("statusText");
+    const progressBar = document.getElementById("progressBar");
+    const topScene = document.getElementById("topScene");
+    const sceneText = document.getElementById("sceneText");
+    const takeaway = document.getElementById("takeaway");
+    const takeawayText = document.getElementById("takeawayText");
+    const missingAudio = document.getElementById("missingAudio");
+    const pauseBtn = document.getElementById("pauseBtn");
+    const resumeBtn = document.getElementById("resumeBtn");
+    const autoBtn = document.getElementById("autoBtn");
+    const restartBtn = document.getElementById("restartBtn");
 
-    // Oscar-level first-person continuous monologue
-    const cinematicScript = `Hi, my name is Vraj Desai. For the last six years I have lived and breathed IT on the front lines. I have kept forty-five devices running every single day in high-traffic environments and supported over five hundred enterprise endpoints with zero data loss during critical migrations. From the intensity of Apple retail stores serving ten thousand customers a week to enterprise deployments at Stryker, a Fortune 500 medical device company, I have proven I can deliver when it matters most. I am now building powerful AI-driven automations with n8n, Grok AI, and JavaScript that are already creating real impact. One thing I have learned about myself is that I am a perfectionist. I will spend extra time making sure everything is flawless. That same trait is why I deliver results others only promise. I hold a CCNA and Microsoft MD-102 certification and I am based in Cork, Ireland. This is why you should hire me. I bring a rare combination of deep hands-on experience and forward-thinking automation skills. I don’t just maintain systems — I make them better, faster, and more reliable. I am ready to bring that same dedication to your team from day one.`;
+    let started = false;
+    let silentMode = false;
+    let paused = false;
+    let autoCinema = true;
+    let timelineStart = 0;
+    let pausedAt = 0;
+    let currentCueIndex = 0;
+    let lastTarget = "";
+    let rafId = null;
 
-    function playCinematicMonologue() {
-      stopNarration();
+    let audioCtx = null;
+    let masterGain = null;
+    let humOsc = null;
+    let pulseOsc = null;
+    let shimmerTimer = null;
 
-      const utterance = new SpeechSynthesisUtterance(cinematicScript);
-      utterance.rate = 1.06;
-      utterance.pitch = 0.97;
-      utterance.volume = 0.95;
+    const totalTimeline = 156;
 
-      // Smart Indian male voice selection (no UI mention)
-      const voices = synth.getVoices();
-      const indianVoice = voices.find(v => 
-        v.lang.includes('en-IN') || 
-        v.name.toLowerCase().includes('india') || 
-        v.name.toLowerCase().includes('indian')
-      );
-      const maleVoice = voices.find(v => 
-        v.name.toLowerCase().includes('male') || 
-        v.name.toLowerCase().includes('david') || 
-        v.name.toLowerCase().includes('mark')
-      );
-      
-      if (indianVoice) utterance.voice = indianVoice;
-      else if (maleVoice) utterance.voice = maleVoice;
+    const cues = [
+      {
+        t: 0,
+        scene: "Scene 01 · Opening",
+        target: "#home",
+        text: "Hi, I am Vraj Desai. If you are viewing this as HR or as a hiring manager, I want this portfolio to feel different from a normal CV.",
+        note: "Strong opening: IT support, endpoint operations, certifications, and automation in one profile."
+      },
+      {
+        t: 6,
+        scene: "Scene 01 · Opening",
+        target: "#home",
+        text: "I work in IT field service, endpoint support, and automation. My value is simple: I fix issues, document clearly, and look for ways to stop the same issue coming back.",
+        note: "Candidate position: practical IT support with process-improvement mindset."
+      },
+      {
+        t: 13,
+        scene: "Scene 01 · Opening",
+        target: "#home",
+        text: "I bring hands-on support experience, Apple-trained troubleshooting discipline, CCNA networking knowledge, and Microsoft endpoint administration skills.",
+        note: "Technical foundation: Apple support, CCNA, Microsoft MD-102, ServiceNow, and endpoint experience."
+      },
+      {
+        t: 20,
+        scene: "Scene 02 · The Person",
+        target: "#about",
+        text: "My background started in busy, user-facing environments. That taught me patience, urgency, and how to stay calm when technology affects real people.",
+        note: "Human signal: calm under pressure, user-focused, and service-minded."
+      },
+      {
+        t: 28,
+        scene: "Scene 02 · The Person",
+        target: "#about",
+        text: "I have worked across retail IT, Apple technical support, and enterprise field service. That mix has made me practical, adaptable, and comfortable under pressure.",
+        note: "Experience range: retail operations, Apple support discipline, and enterprise field service."
+      },
+      {
+        t: 36,
+        scene: "Scene 02 · The Person",
+        target: "#about",
+        text: "One of my strengths is ownership. If I take a ticket, a device issue, or a user problem, I do not treat it as someone else’s responsibility.",
+        note: "Strength: ownership and accountability."
+      },
+      {
+        t: 44,
+        scene: "Scene 02 · The Person",
+        target: "#about",
+        text: "My weakness is that I can sometimes go too deep into root cause because I like permanent fixes. I manage that by balancing curiosity with SLA, priority, and business impact.",
+        note: "Weakness framed professionally: root-cause focus balanced with SLA and business priority."
+      },
+      {
+        t: 53,
+        scene: "Scene 03 · The Stack",
+        target: "#skills",
+        text: "My core skills cover Microsoft 365, Active Directory, Azure AD, ServiceNow, endpoint support, networking, and hardware troubleshooting.",
+        note: "Skill signal: support fundamentals across Microsoft, ITSM, endpoint, and networking."
+      },
+      {
+        t: 61,
+        scene: "Scene 03 · The Stack",
+        target: "#skills",
+        text: "On the field side, I am comfortable with break-fix repairs, PC imaging, laptop builds, mobile device enrolment, peripherals, and deployment work.",
+        note: "Field readiness: imaging, builds, enrolment, break-fix, and deployment."
+      },
+      {
+        t: 69,
+        scene: "Scene 03 · The Stack",
+        target: "#skills",
+        text: "On the automation side, I work with N8N, Grok AI, Airtable, Telegram bots, JavaScript, HTTP workflows, and ITSM-style logic.",
+        note: "Differentiator: automation capability beyond standard support duties."
+      },
+      {
+        t: 77,
+        scene: "Scene 04 · Proof",
+        target: "#projects",
+        text: "My projects are built to show proof, not decoration. I wanted HR to see that I can build something useful, live, and connected to real IT operations.",
+        note: "Proof signal: practical projects connected to IT operations."
+      },
+      {
+        t: 85,
+        scene: "Scene 04 · Proof",
+        target: "#projects",
+        text: "I built an AI-powered IT support ticket workflow using N8N, Grok AI, Airtable, and Telegram notifications.",
+        note: "Project proof: AI ticket classification and notification workflow."
+      },
+      {
+        t: 92,
+        scene: "Scene 04 · Proof",
+        target: "#projects",
+        text: "The workflow classifies tickets, logs them, alerts the right channel, and creates visibility around support activity.",
+        note: "Impact: better classification, visibility, and response."
+      },
+      {
+        t: 99,
+        scene: "Scene 04 · Proof",
+        target: "#projects",
+        text: "I also built automated system health monitoring that detects downtime, records incidents, and sends recovery notifications.",
+        note: "Operational mindset: monitoring, incident logging, and recovery alerts."
+      },
+      {
+        t: 107,
+        scene: "Scene 05 · Field Work",
+        target: "#experience",
+        text: "At Pomeroy Technologies, I support enterprise IT operations on-site at Stryker in Cork. This is practical field service work in a serious environment.",
+        note: "Current role: enterprise field service support at Stryker through Pomeroy."
+      },
+      {
+        t: 115,
+        scene: "Scene 05 · Field Work",
+        target: "#experience",
+        text: "My work includes break-fix repairs, hardware deployments, PC imaging, laptop builds, mobile device enrolment, and ServiceNow incident management.",
+        note: "Current scope: break-fix, deployments, imaging, builds, enrolment, and ServiceNow."
+      },
+      {
+        t: 123,
+        scene: "Scene 05 · Field Work",
+        target: "#experience",
+        text: "At Apple, I developed a stronger troubleshooting mindset, especially around user experience, technical diagnosis, and quality of support.",
+        note: "Apple signal: polished troubleshooting and user experience discipline."
+      },
+      {
+        t: 130,
+        scene: "Scene 06 · Foundation",
+        target: "#education",
+        text: "My education combines business management and data analytics. That helps me understand both technical problems and business consequences.",
+        note: "Education signal: business management plus data analytics."
+      },
+      {
+        t: 137,
+        scene: "Scene 07 · Credentials",
+        target: "#certifications",
+        text: "I backed my experience with certifications including Cisco CCNA and Microsoft MD-102 Endpoint Administrator Associate.",
+        note: "Credential signal: CCNA and Microsoft MD-102 strengthen enterprise readiness."
+      },
+      {
+        t: 144,
+        scene: "Scene 08 · Decision",
+        target: "#contact",
+        text: "So why hire me? Because I bring a rare mix: hands-on support, customer-facing maturity, endpoint knowledge, and automation thinking.",
+        note: "Hiring reason: support maturity plus automation mindset."
+      },
+      {
+        t: 150,
+        scene: "Scene 08 · Decision",
+        target: "#contact",
+        text: "I will not claim to know everything. But I learn fast, take ownership, communicate clearly, and care about making support better.",
+        note: "Final signal: honest, trainable, accountable, and improvement-focused."
+      },
+      {
+        t: 156,
+        scene: "Scene 08 · Decision",
+        target: "#contact",
+        text: "If your team needs someone who can support users, protect uptime, document properly, and reduce repetitive work, I would be worth interviewing.",
+        note: "Decision signal: strong interview candidate for IT field service, endpoint support, and automation roles."
+      }
+    ];
 
-      currentUtterance = utterance;
-
-      utterance.onend = () => {
-        document.getElementById('play-icon').classList.remove('fa-pause');
-        document.getElementById('play-icon').classList.add('fa-play');
-        document.getElementById('play-text').textContent = 'BEGIN THE FILM';
-      };
-
-      synth.speak(utterance);
-
-      document.getElementById('play-icon').classList.remove('fa-play');
-      document.getElementById('play-icon').classList.add('fa-pause');
-      document.getElementById('play-text').textContent = 'NOW PLAYING';
+    function hideGate() {
+      gate.classList.add("hidden");
+      setTimeout(() => {
+        gate.style.display = "none";
+      }, 850);
     }
 
-    function stopNarration() {
-      if (synth.speaking) synth.cancel();
-      document.getElementById('play-icon').classList.remove('fa-pause');
-      document.getElementById('play-icon').classList.add('fa-play');
-      document.getElementById('play-text').textContent = 'BEGIN THE FILM';
+    function runCountdown(done) {
+      const sequence = ["3", "2", "1", "BEGIN"];
+      let index = 0;
+
+      countdown.classList.add("active");
+      countNumber.textContent = sequence[index];
+
+      const timer = setInterval(() => {
+        index++;
+
+        if (index >= sequence.length) {
+          clearInterval(timer);
+          countdown.classList.remove("active");
+          done();
+          return;
+        }
+
+        countNumber.style.animation = "none";
+        void countNumber.offsetWidth;
+        countNumber.style.animation = "countPop 0.78s ease";
+        countNumber.textContent = sequence[index];
+      }, 760);
     }
 
-    window.speechSynthesis.onvoiceschanged = () => {};
+    function showUi() {
+      cinemaVignette.classList.add("active");
+      dock.classList.add("active");
+      topScene.classList.add("show");
+      statusText.textContent = "Candidate film playing";
+    }
 
-    document.addEventListener('keydown', function(e) {
-      if (e.key === ' ' || e.key === 'k') {
-        e.preventDefault();
-        if (synth.speaking) stopNarration();
-        else playCinematicMonologue();
+    function showTakeaway(text) {
+      takeawayText.textContent = text;
+      takeaway.classList.add("show");
+
+      clearTimeout(showTakeaway.timer);
+      showTakeaway.timer = setTimeout(() => {
+        takeaway.classList.remove("show");
+      }, 4700);
+    }
+
+    function setSpeaking(isSpeaking) {
+      orb.classList.toggle("speaking", isSpeaking);
+      bars.classList.toggle("active", isSpeaking);
+    }
+
+    function scrollFrameTo(target) {
+      if (!autoCinema || !target || target === lastTarget) return;
+
+      lastTarget = target;
+
+      try {
+        const doc = frame.contentWindow.document;
+        const element = doc.querySelector(target);
+
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        } else {
+          frame.contentWindow.location.hash = target;
+        }
+      } catch (error) {}
+    }
+
+    function currentTime() {
+      if (!started) return 0;
+
+      if (silentMode) {
+        if (paused) return pausedAt;
+        return Math.max(0, (performance.now() - timelineStart) / 1000);
+      }
+
+      return audio.currentTime || 0;
+    }
+
+    function findCueIndex(time) {
+      let index = 0;
+
+      for (let i = 0; i < cues.length; i++) {
+        if (time >= cues[i].t) {
+          index = i;
+        } else {
+          break;
+        }
+      }
+
+      return index;
+    }
+
+    function updateCue(force = false) {
+      const time = currentTime();
+      const index = findCueIndex(time);
+      const cue = cues[index];
+
+      if (!cue) return;
+
+      if (index !== currentCueIndex || force) {
+        currentCueIndex = index;
+        subtitle.textContent = cue.text;
+        sceneText.textContent = cue.scene;
+        showTakeaway(cue.note);
+        scrollFrameTo(cue.target);
+      }
+
+      const duration = !silentMode && audio.duration && isFinite(audio.duration)
+        ? audio.duration
+        : totalTimeline;
+
+      const progress = Math.min(100, Math.max(0, (time / duration) * 100));
+      progressBar.style.width = progress + "%";
+    }
+
+    function tick() {
+      if (started && !paused) {
+        updateCue(false);
+      }
+
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function startAmbient() {
+      if (audioCtx) return;
+
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = 0.032;
+      masterGain.connect(audioCtx.destination);
+
+      humOsc = audioCtx.createOscillator();
+      humOsc.type = "sine";
+      humOsc.frequency.value = 64;
+
+      const humGain = audioCtx.createGain();
+      humGain.gain.value = 0.68;
+
+      humOsc.connect(humGain);
+      humGain.connect(masterGain);
+      humOsc.start();
+
+      pulseOsc = audioCtx.createOscillator();
+      pulseOsc.type = "triangle";
+      pulseOsc.frequency.value = 128;
+
+      const pulseGain = audioCtx.createGain();
+      pulseGain.gain.value = 0.052;
+
+      pulseOsc.connect(pulseGain);
+      pulseGain.connect(masterGain);
+      pulseOsc.start();
+
+      shimmerTimer = setInterval(() => {
+        if (!audioCtx || !masterGain || paused) return;
+
+        const shimmer = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        shimmer.type = "sine";
+        shimmer.frequency.value = 480 + Math.random() * 620;
+
+        gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.04, audioCtx.currentTime + 0.018);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.16);
+
+        shimmer.connect(gain);
+        gain.connect(masterGain);
+
+        shimmer.start();
+        shimmer.stop(audioCtx.currentTime + 0.18);
+      }, 3400);
+    }
+
+    function pauseAmbient() {
+      if (masterGain && audioCtx) {
+        masterGain.gain.setTargetAtTime(0.001, audioCtx.currentTime, 0.08);
+      }
+    }
+
+    function resumeAmbient() {
+      if (masterGain && audioCtx) {
+        masterGain.gain.setTargetAtTime(0.032, audioCtx.currentTime, 0.08);
+      }
+    }
+
+    function showMissingAudio() {
+      missingAudio.classList.add("show");
+
+      setTimeout(() => {
+        missingAudio.classList.remove("show");
+      }, 5200);
+    }
+
+    function beginFilm(withAudio) {
+      silentMode = !withAudio;
+      paused = false;
+      started = false;
+      currentCueIndex = 0;
+      lastTarget = "";
+
+      hideGate();
+
+      runCountdown(() => {
+        started = true;
+        showUi();
+        startAmbient();
+        setSpeaking(withAudio);
+
+        if (withAudio) {
+          audio.currentTime = 0;
+
+          audio.play()
+            .then(() => {
+              statusText.textContent = "Candidate film playing";
+              setSpeaking(true);
+            })
+            .catch(() => {
+              silentMode = true;
+              timelineStart = performance.now();
+              statusText.textContent = "Subtitles mode active";
+              setSpeaking(false);
+              showMissingAudio();
+            });
+        } else {
+          timelineStart = performance.now();
+          statusText.textContent = "Subtitles mode active";
+          setSpeaking(false);
+        }
+
+        updateCue(true);
+
+        if (!rafId) {
+          tick();
+        }
+      });
+    }
+
+    function pauseFilm() {
+      if (!started || paused) return;
+
+      paused = true;
+      pausedAt = currentTime();
+
+      if (!silentMode) {
+        audio.pause();
+      }
+
+      pauseAmbient();
+      setSpeaking(false);
+      statusText.textContent = "Candidate film paused";
+    }
+
+    function resumeFilm() {
+      if (!started || !paused) return;
+
+      paused = false;
+
+      if (silentMode) {
+        timelineStart = performance.now() - pausedAt * 1000;
+        statusText.textContent = "Subtitles mode active";
+        setSpeaking(false);
+      } else {
+        audio.play().then(() => {
+          statusText.textContent = "Candidate film playing";
+          setSpeaking(true);
+        }).catch(() => {
+          silentMode = true;
+          timelineStart = performance.now() - pausedAt * 1000;
+          statusText.textContent = "Subtitles mode active";
+          setSpeaking(false);
+          showMissingAudio();
+        });
+      }
+
+      resumeAmbient();
+      updateCue(true);
+    }
+
+    function restartFilm() {
+      paused = false;
+      currentCueIndex = 0;
+      lastTarget = "";
+
+      if (silentMode) {
+        timelineStart = performance.now();
+      } else {
+        audio.currentTime = 0;
+        audio.play().catch(() => {
+          silentMode = true;
+          timelineStart = performance.now();
+          showMissingAudio();
+        });
+      }
+
+      resumeAmbient();
+      setSpeaking(!silentMode);
+      statusText.textContent = silentMode ? "Subtitles mode active" : "Candidate film playing";
+      updateCue(true);
+    }
+
+    startBtn.addEventListener("click", () => {
+      beginFilm(true);
+    });
+
+    silentBtn.addEventListener("click", () => {
+      beginFilm(false);
+    });
+
+    pauseBtn.addEventListener("click", pauseFilm);
+    resumeBtn.addEventListener("click", resumeFilm);
+    restartBtn.addEventListener("click", restartFilm);
+
+    autoBtn.addEventListener("click", () => {
+      autoCinema = !autoCinema;
+      autoBtn.classList.toggle("active", autoCinema);
+
+      autoBtn.innerHTML = autoCinema
+        ? '<i class="fa-solid fa-wand-magic-sparkles"></i> Auto Cinema'
+        : '<i class="fa-solid fa-hand-pointer"></i> Manual Browse';
+    });
+
+    audio.addEventListener("ended", () => {
+      setSpeaking(false);
+      statusText.textContent = "Candidate film complete";
+      subtitle.textContent = "Thank you for watching my candidate film. I am Vraj Desai, and I am ready for the next challenge.";
+      progressBar.style.width = "100%";
+      showTakeaway("Final decision: strong interview candidate for IT support, endpoint, field service, and automation roles.");
+    });
+
+    audio.addEventListener("error", () => {
+      if (started && !silentMode) {
+        silentMode = true;
+        timelineStart = performance.now();
+        setSpeaking(false);
+        statusText.textContent = "Subtitles mode active";
+        showMissingAudio();
       }
     });
 
-    console.log('%c[THE OPENING ACT] Cinematic first-person monologue ready.', 'color:#00f5ff');
+    document.addEventListener("keydown", event => {
+      const key = event.key.toLowerCase();
+
+      if (key === "p") {
+        if (paused) {
+          resumeFilm();
+        } else {
+          pauseFilm();
+        }
+      }
+
+      if (key === "r") {
+        restartFilm();
+      }
+
+      if (key === "a") {
+        autoBtn.click();
+      }
+    });
   </script>
 </body>
 </html>
