@@ -1,786 +1,173 @@
-```css
-/* ============================
-   CINEMATIC VOICE PORTFOLIO
-   ============================ */
-
-.experience-gate {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  display: grid;
-  place-items: center;
-  background:
-    radial-gradient(circle at 30% 20%, rgba(34,211,238,0.28), transparent 34%),
-    radial-gradient(circle at 70% 70%, rgba(34,197,94,0.18), transparent 34%),
-    rgba(2, 6, 18, 0.94);
-  backdrop-filter: blur(18px);
-  transition: 0.7s ease;
-}
-
-.experience-gate.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(1.03);
-}
-
-.gate-card {
-  width: min(92vw, 760px);
-  padding: 34px;
-  border-radius: 34px;
-  border: 1px solid rgba(255,255,255,0.16);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.055));
-  box-shadow: 0 40px 120px rgba(0,0,0,0.6);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.gate-card::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  background: linear-gradient(120deg, transparent, rgba(34,211,238,0.28), transparent);
-  transform: translateX(-100%);
-  animation: gateScan 3s infinite;
-}
-
-@keyframes gateScan {
-  to { transform: translateX(100%); }
-}
-
-.gate-inner {
-  position: relative;
-  z-index: 2;
-}
-
-.gate-badge {
-  width: 92px;
-  height: 92px;
-  margin: 0 auto 20px;
-  border-radius: 28px;
-  display: grid;
-  place-items: center;
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: #04111b;
-  background: linear-gradient(135deg, var(--cyan), var(--green));
-  box-shadow: 0 0 60px rgba(34,211,238,0.45);
-}
-
-.gate-card h2 {
-  font-size: clamp(2rem, 5vw, 4rem);
-  line-height: 0.95;
-  letter-spacing: -0.07em;
-  margin-bottom: 16px;
-}
-
-.gate-card h2 span {
-  background: linear-gradient(135deg, white, var(--cyan), var(--green));
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.gate-card p {
-  color: var(--muted);
-  max-width: 620px;
-  margin: 0 auto 24px;
-  font-size: 1.05rem;
-}
-
-.gate-actions {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-
-.gate-small {
-  margin-top: 18px;
-  color: #7f8da3;
-  font-size: 0.82rem;
-}
-
-.voice-dock {
-  position: fixed;
-  left: 50%;
-  bottom: 22px;
-  transform: translateX(-50%) translateY(130%);
-  z-index: 1200;
-  width: min(calc(100% - 30px), 860px);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 24px;
-  background: rgba(5,8,22,0.82);
-  backdrop-filter: blur(24px);
-  box-shadow: 0 24px 80px rgba(0,0,0,0.45);
-  padding: 14px;
-  transition: 0.45s cubic-bezier(.2,.8,.2,1);
-}
-
-.voice-dock.active {
-  transform: translateX(-50%) translateY(0);
-}
-
-.voice-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  margin-bottom: 10px;
-}
-
-.voice-id {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.voice-orb {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(135deg, var(--cyan), var(--green));
-  color: #03111b;
-  box-shadow: 0 0 30px rgba(34,211,238,0.45);
-  position: relative;
-}
-
-.voice-orb.speaking::before,
-.voice-orb.speaking::after {
-  content: "";
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  border: 1px solid rgba(34,211,238,0.55);
-  animation: voicePulse 1.35s infinite;
-}
-
-.voice-orb.speaking::after {
-  inset: -15px;
-  animation-delay: 0.35s;
-}
-
-@keyframes voicePulse {
-  0% { transform: scale(0.9); opacity: 0.9; }
-  100% { transform: scale(1.25); opacity: 0; }
-}
-
-.voice-name {
-  font-weight: 900;
-  line-height: 1.1;
-}
-
-.voice-name span {
-  display: block;
-  color: var(--muted);
-  font-size: 0.78rem;
-  margin-top: 3px;
-}
-
-.voice-controls {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.voice-btn {
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.08);
-  color: white;
-  border-radius: 999px;
-  padding: 9px 12px;
-  font-size: 0.82rem;
-  font-weight: 900;
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-.voice-btn:hover {
-  background: rgba(34,211,238,0.12);
-  border-color: rgba(34,211,238,0.36);
-}
-
-.subtitle-box {
-  min-height: 54px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.055);
-  padding: 12px 14px;
-  color: #eaf8ff;
-  font-weight: 700;
-}
-
-.sound-bars {
-  display: flex;
-  align-items: end;
-  gap: 4px;
-  height: 26px;
-  margin-left: auto;
-}
-
-.sound-bars span {
-  width: 4px;
-  height: 8px;
-  border-radius: 99px;
-  background: linear-gradient(var(--cyan), var(--green));
-  opacity: 0.45;
-}
-
-.sound-bars.active span {
-  animation: soundBar 0.8s infinite ease-in-out;
-}
-
-.sound-bars span:nth-child(2) { animation-delay: 0.1s; }
-.sound-bars span:nth-child(3) { animation-delay: 0.2s; }
-.sound-bars span:nth-child(4) { animation-delay: 0.3s; }
-.sound-bars span:nth-child(5) { animation-delay: 0.4s; }
-
-@keyframes soundBar {
-  0%, 100% { height: 7px; opacity: 0.45; }
-  50% { height: 25px; opacity: 1; }
-}
-
-.cinematic-focus {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 50;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,0.35), transparent 22%, transparent 78%, rgba(0,0,0,0.42));
-  opacity: 0;
-  transition: 0.5s;
-}
-
-.cinematic-focus.active {
-  opacity: 1;
-}
-
-.recruiter-flash {
-  position: fixed;
-  top: 94px;
-  right: 22px;
-  z-index: 1000;
-  max-width: 340px;
-  padding: 16px;
-  border-radius: 20px;
-  border: 1px solid rgba(34,211,238,0.28);
-  background: rgba(5,8,22,0.8);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 22px 70px rgba(0,0,0,0.4);
-  transform: translateX(120%);
-  opacity: 0;
-  transition: 0.45s ease;
-}
-
-.recruiter-flash.show {
-  transform: translateX(0);
-  opacity: 1;
-}
-
-.recruiter-flash strong {
-  display: block;
-  color: var(--cyan);
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin-bottom: 6px;
-}
-
-.recruiter-flash p {
-  color: #e8f5ff;
-  font-weight: 800;
-  font-size: 0.95rem;
-}
-
-@media (max-width: 680px) {
-  .voice-top {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .voice-controls {
-    width: 100%;
-  }
-
-  .voice-btn {
-    flex: 1;
-  }
-
-  .recruiter-flash {
-    right: 14px;
-    left: 14px;
-    max-width: none;
-  }
-}
-```
-
----
-
 ```html
-<body>
-```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VRAJ • NEURAL REEL • 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  body { font-family: 'Inter', system_ui, sans-serif; }
+  .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; }
+  .neon-cyan { color: #00f5ff; text-shadow: 0 0 15px #00f5ff; }
+  .scene { scroll-snap-align: start; min-height: 100vh; }
+</style>
+</head>
+<body class="bg-[#050505] text-white overflow-x-hidden">
 
+  <!-- Top Controls -->
+  <div class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-xl border-b border-white/10 px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-x-3">
+      <div class="flex items-center gap-x-2">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-[#00f5ff] to-[#39ff14] flex items-center justify-center">
+          <i class="fa-solid fa-brain text-black"></i>
+        </div>
+        <span class="font-display text-2xl tracking-tighter">VRAJ NEURAL REEL</span>
+      </div>
+      <div class="px-3 py-1 bg-white/10 rounded-full text-xs">SECRETARY BRIEFING MODE</div>
+    </div>
 
-```html
-<!-- CINEMATIC START EXPERIENCE -->
-<div class="experience-gate" id="experienceGate">
-  <div class="gate-card">
-    <div class="gate-inner">
-      <div class="gate-badge">VD</div>
+    <div class="flex items-center gap-x-3">
+      <button onclick="playFullBriefing()" id="play-btn"
+              class="px-8 py-2.5 bg-[#00f5ff] text-black font-semibold rounded-2xl flex items-center gap-x-2 hover:bg-white active:scale-[0.985]">
+        <i class="fa-solid fa-play mr-1" id="play-icon"></i>
+        <span id="play-text">PLAY SECRETARY BRIEFING</span>
+      </button>
+      <button onclick="stopNarration()" class="px-5 py-2.5 border border-white/20 rounded-2xl hover:bg-white/5 text-sm">Stop</button>
+    </div>
+  </div>
 
-      <h2>
-        Start Vraj’s <span>Interactive Video Portfolio</span>
-      </h2>
-
-      <p>
-        This portfolio speaks while you browse. You’ll hear short 5-second keypoints,
-        subtle IT command-center audio, and section-by-section narration designed for recruiters.
-      </p>
-
-      <div class="gate-actions">
-        <button class="btn btn-primary" id="startExperience">
-          <i class="fa-solid fa-play"></i>
-          Start Experience
+  <!-- HERO -->
+  <section class="scene flex items-center justify-center min-h-screen pt-16 relative bg-[#050505]">
+    <div class="max-w-4xl text-center px-6">
+      <div class="inline-block px-5 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 text-sm">PERSONAL SECRETARY BRIEFING • 2026</div>
+      
+      <h1 class="font-display text-7xl md:text-8xl tracking-tighter leading-none mb-6">
+        Mr. [Boss],<br>
+        <span class="neon-cyan">I’d like to bring someone exceptional to your attention.</span>
+      </h1>
+      <p class="text-2xl text-white/70 max-w-lg mx-auto">Vraj Desai — spoken personally by his secretary.</p>
+      
+      <div class="mt-10">
+        <button onclick="playFullBriefing()" 
+                class="px-10 py-5 text-xl font-semibold bg-white text-black rounded-3xl flex items-center gap-x-3 mx-auto hover:bg-[#00f5ff]">
+          <i class="fa-solid fa-play mr-2"></i> START THE BRIEFING (MALE VOICE)
         </button>
-
-        <button class="btn btn-secondary" id="startSilent">
-          <i class="fa-solid fa-volume-xmark"></i>
-          Browse Silently
-        </button>
-      </div>
-
-      <div class="gate-small">
-        Audio starts only after your click because browsers block automatic sound.
+        <p class="text-xs text-white/40 mt-4">Continuous narration • Male voice • No breaks</p>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<div class="cinematic-focus" id="cinematicFocus"></div>
+  <!-- SCENES (visual only – narration is continuous) -->
+  <section class="scene flex items-center bg-[#0a0a0a] px-6 py-20">
+    <div class="max-w-5xl mx-auto">
+      <div class="uppercase tracking-[4px] text-xs text-[#39ff14] mb-2">SCENE 01</div>
+      <h2 class="font-display text-6xl tracking-tighter mb-8">6+ years turning chaos into reliable systems</h2>
+      <div class="max-w-2xl text-2xl text-white/90">45 devices daily • 500+ enterprise endpoints • Zero data loss migrations • 20+ live automations shipped</div>
+    </div>
+  </section>
 
-<div class="recruiter-flash" id="recruiterFlash">
-  <strong>Recruiter Key Point</strong>
-  <p id="flashText">Enterprise IT support + automation mindset.</p>
-</div>
+  <section class="scene flex items-center bg-[#111] px-6 py-20">
+    <div class="max-w-5xl mx-auto">
+      <div class="uppercase tracking-[4px] text-xs text-[#39ff14] mb-2">SCENE 02</div>
+      <h2 class="font-display text-6xl tracking-tighter mb-8">From Apple retail to Stryker Fortune 500</h2>
+      <div class="max-w-2xl text-2xl text-white/90">Keeping high-traffic stores alive and enterprise medical devices running without downtime.</div>
+    </div>
+  </section>
 
-<!-- VOICE DOCK -->
-<div class="voice-dock" id="voiceDock">
-  <div class="voice-top">
-    <div class="voice-id">
-      <div class="voice-orb" id="voiceOrb">
-        <i class="fa-solid fa-microphone-lines"></i>
-      </div>
-
-      <div class="voice-name">
-        Vraj is speaking
-        <span id="voiceStatus">Guided recruiter mode active</span>
-      </div>
-
-      <div class="sound-bars" id="soundBars">
-        <span></span><span></span><span></span><span></span><span></span>
+  <section class="scene flex items-center bg-[#0a0a0a] px-6 py-20">
+    <div class="max-w-5xl mx-auto">
+      <div class="uppercase tracking-[4px] text-xs text-[#39ff14] mb-2">SCENE 03</div>
+      <h2 class="font-display text-6xl tracking-tighter mb-8">His neural arsenal</h2>
+      <div class="grid md:grid-cols-3 gap-6 text-xl">
+        <div class="p-8 bg-white/5 rounded-3xl">Field &amp; Endpoint Mastery</div>
+        <div class="p-8 bg-white/5 rounded-3xl">AI Automation Builder (n8n • Grok AI • JavaScript)</div>
+        <div class="p-8 bg-white/5 rounded-3xl">CCNA • MD-102 • SAP S/4HANA</div>
       </div>
     </div>
+  </section>
 
-    <div class="voice-controls">
-      <button class="voice-btn" id="replayVoice">
-        <i class="fa-solid fa-rotate-right"></i>
-        Replay
-      </button>
-
-      <button class="voice-btn" id="toggleVoice">
-        <i class="fa-solid fa-volume-high"></i>
-        Voice On
-      </button>
-
-      <button class="voice-btn" id="toggleAmbient">
-        <i class="fa-solid fa-wave-square"></i>
-        Ambient On
-      </button>
+  <section class="scene flex items-center justify-center bg-[#050505] px-6 py-20 min-h-[70vh]">
+    <div class="max-w-3xl text-center">
+      <h2 class="font-display text-6xl tracking-tighter mb-6">I highly recommend Vraj for your team.</h2>
+      <p class="text-2xl text-white/70 mb-10">Cork, Ireland • Open to Field Service, Endpoint &amp; Automation roles</p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="mailto:vrajdesai10@gmail.com" class="px-10 py-4 bg-[#00f5ff] text-black rounded-3xl font-semibold flex items-center justify-center gap-x-3">Email Vraj</a>
+        <a href="tel:+353861653233" class="px-10 py-4 border border-white/30 rounded-3xl font-semibold flex items-center justify-center gap-x-3">+353 86 165 3233</a>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="subtitle-box" id="subtitleBox">
-    Click Start Experience to begin Vraj’s guided portfolio.
-  </div>
-</div>
-```
+  <script>
+    let synth = window.speechSynthesis;
+    let currentUtterance = null;
 
----
+    // Full continuous secretary briefing script (male voice, no breaks)
+    const fullBriefing = `Mr. Thompson, I wanted to personally bring this candidate to your attention. Vraj Desai is one of the strongest IT professionals I have come across in a long time. With over six years of hands-on experience, he has consistently turned complex technical challenges into reliable, scalable systems. He manages forty-five devices daily across high-traffic environments and has supported over five hundred enterprise endpoints with zero data loss during critical migrations. From keeping a busy Apple retail store running smoothly for ten thousand customers a week to delivering enterprise deployments at Stryker, a Fortune 500 medical device company, Vraj has proven himself time and again. He is now building powerful AI-driven automations using n8n, Grok AI, and JavaScript that are already delivering real results. He holds a CCNA and Microsoft MD-102 certification and is based in Cork, Ireland. I highly recommend Vraj Desai for any Field Service, Endpoint Management, or Automation role. He is ready to deliver from day one.`;
 
+    function getMaleVoice() {
+      const voices = synth.getVoices();
+      // Prefer deep male voices
+      const malePreferences = ['Male', 'David', 'Mark', 'James', 'Daniel', 'George', 'UK English Male', 'US English Male'];
+      
+      for (let pref of malePreferences) {
+        const voice = voices.find(v => v.name.toLowerCase().includes(pref.toLowerCase()) || v.lang.includes('en'));
+        if (voice) return voice;
+      }
+      // Fallback to any English voice
+      return voices.find(v => v.lang.includes('en')) || voices[0];
+    }
 
+    function playFullBriefing() {
+      stopNarration();
 
-```html
+      const utterance = new SpeechSynthesisUtterance(fullBriefing);
+      utterance.rate = 1.05;        // Natural, slightly professional pace
+      utterance.pitch = 0.95;       // Slightly deeper male tone
+      utterance.volume = 0.95;
+
+      const maleVoice = getMaleVoice();
+      if (maleVoice) utterance.voice = maleVoice;
+
+      currentUtterance = utterance;
+
+      utterance.onend = () => {
+        document.getElementById('play-icon').classList.remove('fa-pause');
+        document.getElementById('play-icon').classList.add('fa-play');
+        document.getElementById('play-text').textContent = 'PLAY SECRETARY BRIEFING';
+      };
+
+      synth.speak(utterance);
+
+      // Update button
+      document.getElementById('play-icon').classList.remove('fa-play');
+      document.getElementById('play-icon').classList.add('fa-pause');
+      document.getElementById('play-text').textContent = 'BRIEFING IN PROGRESS';
+    }
+
+    function stopNarration() {
+      if (synth.speaking) synth.cancel();
+      document.getElementById('play-icon').classList.remove('fa-pause');
+      document.getElementById('play-icon').classList.add('fa-play');
+      document.getElementById('play-text').textContent = 'PLAY SECRETARY BRIEFING';
+    }
+
+    // Load voices
+    window.speechSynthesis.onvoiceschanged = () => {};
+
+    // Keyboard support
+    document.addEventListener('keydown', function(e) {
+      if (e.key === ' ' || e.key === 'k') {
+        e.preventDefault();
+        if (synth.speaking) stopNarration();
+        else playFullBriefing();
+      }
+    });
+
+    console.log('%c[NEURAL REEL] Secretary briefing mode ready with male voice.', 'color:#00f5ff');
+  </script>
 </body>
-```
-
-
-
-```html
-<script>
-/* =========================================================
-   VRAJ DESAI - INTERACTIVE VIDEO VOICE PORTFOLIO ENGINE
-   ========================================================= */
-
-(function () {
-  const gate = document.getElementById("experienceGate");
-  const startExperience = document.getElementById("startExperience");
-  const startSilent = document.getElementById("startSilent");
-  const voiceDock = document.getElementById("voiceDock");
-  const subtitleBox = document.getElementById("subtitleBox");
-  const voiceOrb = document.getElementById("voiceOrb");
-  const voiceStatus = document.getElementById("voiceStatus");
-  const replayVoice = document.getElementById("replayVoice");
-  const toggleVoice = document.getElementById("toggleVoice");
-  const toggleAmbient = document.getElementById("toggleAmbient");
-  const soundBars = document.getElementById("soundBars");
-  const cinematicFocus = document.getElementById("cinematicFocus");
-  const recruiterFlash = document.getElementById("recruiterFlash");
-  const flashText = document.getElementById("flashText");
-
-  let voiceEnabled = true;
-  let ambientEnabled = true;
-  let experienceStarted = false;
-  let currentSectionId = "home";
-  let audioCtx = null;
-  let masterGain = null;
-  let humOsc = null;
-  let pulseOsc = null;
-  let beepTimer = null;
-
-  const narration = {
-    home: {
-      subtitle:
-        "Hi, I’m Vraj Desai. I fix enterprise IT issues, build endpoint workflows, and automate support work before it becomes a bottleneck.",
-      flash:
-        "IT Field Service Engineer with Apple, Stryker, ServiceNow, CCNA and Microsoft MD-102."
-    },
-
-    about: {
-      subtitle:
-        "My profile connects field support, customer service, endpoint operations, and automation. I’m practical, fast, and documentation-focused.",
-      flash:
-        "Hands-on support mindset: server room, user desk, ticket queue, and automation builder."
-    },
-
-    skills: {
-      subtitle:
-        "My stack covers networking, Microsoft 365, endpoint support, ServiceNow, break-fix, imaging, JavaScript, N8N, Grok AI, and Airtable.",
-      flash:
-        "Recruiter signal: not only support skills — automation skills too."
-    },
-
-    projects: {
-      subtitle:
-        "These are live systems, not decoration. I built AI ticket classification, Telegram alerts, Airtable logging, and system health monitoring.",
-      flash:
-        "Proof of work: live N8N, Grok AI, Airtable, Telegram and monitoring workflows."
-    },
-
-    experience: {
-      subtitle:
-        "My experience includes Stryker through Pomeroy, Apple technical support, and Sainsbury’s retail IT across devices, users, and operations.",
-      flash:
-        "Enterprise + retail + Apple support experience in real operational environments."
-    },
-
-    education: {
-      subtitle:
-        "My education combines business management and data analytics, helping me understand both technical problems and business impact.",
-      flash:
-        "Business + analytics background strengthens communication and decision-making."
-    },
-
-    certifications: {
-      subtitle:
-        "My certifications include CCNA, Microsoft MD-102, Service Desk fundamentals, SAP training, data analytics, and networking essentials.",
-      flash:
-        "Verified learning path: networking, endpoint administration, service desk, SAP and analytics."
-    },
-
-    contact: {
-      subtitle:
-        "If you need someone who can support users, protect uptime, document clearly, and automate repetitive IT work, let’s connect.",
-      flash:
-        "Next step: interview Vraj for IT Field Service, Endpoint Support or IT Automation roles."
-    }
-  };
-
-  function getCurrentNarration() {
-    return narration[currentSectionId] || narration.home;
-  }
-
-  function showDock() {
-    voiceDock.classList.add("active");
-    cinematicFocus.classList.add("active");
-  }
-
-  function hideGate() {
-    gate.classList.add("hidden");
-    setTimeout(() => {
-      gate.style.display = "none";
-    }, 800);
-  }
-
-  function showFlash(text) {
-    flashText.textContent = text;
-    recruiterFlash.classList.add("show");
-
-    clearTimeout(showFlash.timer);
-    showFlash.timer = setTimeout(() => {
-      recruiterFlash.classList.remove("show");
-    }, 4200);
-  }
-
-  function chooseVoice() {
-    const voices = window.speechSynthesis.getVoices();
-
-    // Try to choose a clear English voice.
-    const preferred =
-      voices.find(v => /Google UK English Male/i.test(v.name)) ||
-      voices.find(v => /Microsoft Ryan/i.test(v.name)) ||
-      voices.find(v => /Daniel/i.test(v.name)) ||
-      voices.find(v => /Male/i.test(v.name) && /en/i.test(v.lang)) ||
-      voices.find(v => /en-GB/i.test(v.lang)) ||
-      voices.find(v => /en/i.test(v.lang));
-
-    return preferred || null;
-  }
-
-  function speakCurrentSection() {
-    const item = getCurrentNarration();
-
-    subtitleBox.textContent = item.subtitle;
-    showFlash(item.flash);
-
-    if (!voiceEnabled || !experienceStarted) {
-      voiceStatus.textContent = "Voice muted";
-      return;
-    }
-
-    if (!("speechSynthesis" in window)) {
-      voiceStatus.textContent = "Voice not supported in this browser";
-      return;
-    }
-
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(item.subtitle);
-    const selectedVoice = chooseVoice();
-
-    if (selectedVoice) {
-      utterance.voice = selectedVoice;
-    }
-
-    utterance.rate = 1.05;
-    utterance.pitch = 0.92;
-    utterance.volume = 0.95;
-    utterance.lang = "en-GB";
-
-    utterance.onstart = () => {
-      voiceOrb.classList.add("speaking");
-      soundBars.classList.add("active");
-      voiceStatus.textContent = "Speaking key points";
-    };
-
-    utterance.onend = () => {
-      voiceOrb.classList.remove("speaking");
-      soundBars.classList.remove("active");
-      voiceStatus.textContent = "Listening as recruiter browses";
-    };
-
-    window.speechSynthesis.speak(utterance);
-  }
-
-  function startAmbientSound() {
-    if (!ambientEnabled) return;
-
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-
-    if (audioCtx.state === "suspended") {
-      audioCtx.resume();
-    }
-
-    masterGain = audioCtx.createGain();
-    masterGain.gain.value = 0.045;
-    masterGain.connect(audioCtx.destination);
-
-    // Low cyber hum
-    humOsc = audioCtx.createOscillator();
-    humOsc.type = "sine";
-    humOsc.frequency.value = 72;
-
-    const humGain = audioCtx.createGain();
-    humGain.gain.value = 0.55;
-
-    humOsc.connect(humGain);
-    humGain.connect(masterGain);
-    humOsc.start();
-
-    // Soft pulse tone
-    pulseOsc = audioCtx.createOscillator();
-    pulseOsc.type = "triangle";
-    pulseOsc.frequency.value = 144;
-
-    const pulseGain = audioCtx.createGain();
-    pulseGain.gain.value = 0.08;
-
-    pulseOsc.connect(pulseGain);
-    pulseGain.connect(masterGain);
-    pulseOsc.start();
-
-    // Random tiny interface beeps
-    beepTimer = setInterval(() => {
-      if (!ambientEnabled || !audioCtx || !masterGain) return;
-
-      const beep = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      beep.type = "sine";
-      beep.frequency.value = 620 + Math.random() * 520;
-
-      gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.08, audioCtx.currentTime + 0.015);
-      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.14);
-
-      beep.connect(gain);
-      gain.connect(masterGain);
-
-      beep.start();
-      beep.stop(audioCtx.currentTime + 0.16);
-    }, 2600);
-  }
-
-  function stopAmbientSound() {
-    try {
-      if (humOsc) {
-        humOsc.stop();
-        humOsc.disconnect();
-      }
-
-      if (pulseOsc) {
-        pulseOsc.stop();
-        pulseOsc.disconnect();
-      }
-
-      if (masterGain) {
-        masterGain.disconnect();
-      }
-
-      clearInterval(beepTimer);
-    } catch (e) {}
-
-    humOsc = null;
-    pulseOsc = null;
-    masterGain = null;
-  }
-
-  function startFullExperience() {
-    experienceStarted = true;
-    voiceEnabled = true;
-    ambientEnabled = true;
-
-    hideGate();
-    showDock();
-    startAmbientSound();
-
-    setTimeout(() => {
-      speakCurrentSection();
-    }, 500);
-  }
-
-  function startSilentExperience() {
-    experienceStarted = true;
-    voiceEnabled = false;
-    ambientEnabled = false;
-
-    hideGate();
-    showDock();
-
-    toggleVoice.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> Voice Off';
-    toggleAmbient.innerHTML = '<i class="fa-solid fa-wave-square"></i> Ambient Off';
-
-    const item = getCurrentNarration();
-    subtitleBox.textContent = item.subtitle;
-    voiceStatus.textContent = "Silent browsing mode";
-  }
-
-  startExperience.addEventListener("click", startFullExperience);
-  startSilent.addEventListener("click", startSilentExperience);
-
-  replayVoice.addEventListener("click", () => {
-    speakCurrentSection();
-  });
-
-  toggleVoice.addEventListener("click", () => {
-    voiceEnabled = !voiceEnabled;
-
-    if (!voiceEnabled) {
-      window.speechSynthesis.cancel();
-      voiceOrb.classList.remove("speaking");
-      soundBars.classList.remove("active");
-      voiceStatus.textContent = "Voice muted";
-      toggleVoice.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> Voice Off';
-    } else {
-      toggleVoice.innerHTML = '<i class="fa-solid fa-volume-high"></i> Voice On';
-      speakCurrentSection();
-    }
-  });
-
-  toggleAmbient.addEventListener("click", () => {
-    ambientEnabled = !ambientEnabled;
-
-    if (!ambientEnabled) {
-      stopAmbientSound();
-      toggleAmbient.innerHTML = '<i class="fa-solid fa-wave-square"></i> Ambient Off';
-    } else {
-      toggleAmbient.innerHTML = '<i class="fa-solid fa-wave-square"></i> Ambient On';
-      startAmbientSound();
-    }
-  });
-
-  // Detect section changes and trigger 5-second keypoint voice-over
-  const sections = document.querySelectorAll("section[id]");
-
-  const voiceSectionObserver = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const newId = entry.target.id;
-
-          if (newId !== currentSectionId) {
-            currentSectionId = newId;
-
-            if (experienceStarted) {
-              speakCurrentSection();
-            }
-          }
-        }
-      });
-    },
-    { threshold: 0.62 }
-  );
-
-  sections.forEach(section => voiceSectionObserver.observe(section));
-
-  // Preload voices in some browsers
-  if ("speechSynthesis" in window) {
-    window.speechSynthesis.onvoiceschanged = () => {
-      window.speechSynthesis.getVoices();
-    };
-  }
-
-  // Recruiter keyboard shortcut:
-  // Press V to replay Vraj voice-over.
-  document.addEventListener("keydown", e => {
-    if (e.key.toLowerCase() === "v") {
-      speakCurrentSection();
-    }
-  });
-})();
-</script>
+</html>
 ```
