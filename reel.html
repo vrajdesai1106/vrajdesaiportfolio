@@ -1,173 +1,874 @@
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VRAJ • NEURAL REEL • 2026</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<style>
-  body { font-family: 'Inter', system_ui, sans-serif; }
-  .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; }
-  .neon-cyan { color: #00f5ff; text-shadow: 0 0 15px #00f5ff; }
-  .scene { scroll-snap-align: start; min-height: 100vh; }
-</style>
-</head>
-<body class="bg-[#050505] text-white overflow-x-hidden">
 
-  <!-- Top Controls -->
-  <div class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-xl border-b border-white/10 px-6 py-3 flex items-center justify-between">
-    <div class="flex items-center gap-x-3">
-      <div class="flex items-center gap-x-2">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-[#00f5ff] to-[#39ff14] flex items-center justify-center">
-          <i class="fa-solid fa-brain text-black"></i>
-        </div>
-        <span class="font-display text-2xl tracking-tighter">VRAJ NEURAL REEL</span>
+```css
+/* =====================================================
+   EXECUTIVE BRIEFING MODE - CONTINUOUS MALE NARRATION
+   ===================================================== */
+
+.executive-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(34,211,238,0.28), transparent 34%),
+    radial-gradient(circle at 80% 80%, rgba(34,197,94,0.18), transparent 34%),
+    rgba(2, 6, 18, 0.96);
+  backdrop-filter: blur(22px);
+  transition: 0.75s ease;
+}
+
+.executive-gate.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1.04);
+}
+
+.executive-card {
+  width: min(92vw, 820px);
+  padding: 36px;
+  border-radius: 36px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.13), rgba(255,255,255,0.055));
+  box-shadow: 0 45px 140px rgba(0,0,0,0.62);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.executive-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(120deg, transparent, rgba(34,211,238,0.32), transparent);
+  transform: translateX(-120%);
+  animation: executiveScan 3.2s infinite;
+}
+
+@keyframes executiveScan {
+  to { transform: translateX(120%); }
+}
+
+.executive-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.executive-badge {
+  width: 98px;
+  height: 98px;
+  margin: 0 auto 22px;
+  border-radius: 30px;
+  display: grid;
+  place-items: center;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2.25rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--cyan), var(--green));
+  color: #04111b;
+  box-shadow: 0 0 70px rgba(34,211,238,0.46);
+}
+
+.executive-card h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2.15rem, 5vw, 4.25rem);
+  line-height: 0.95;
+  letter-spacing: -0.075em;
+  margin-bottom: 18px;
+}
+
+.executive-card h2 span {
+  background: linear-gradient(135deg, white, var(--cyan), var(--green));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.executive-card p {
+  max-width: 660px;
+  margin: 0 auto 26px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.executive-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.executive-small {
+  margin-top: 18px;
+  color: #7f8da3;
+  font-size: 0.82rem;
+}
+
+.briefing-dock {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%) translateY(145%);
+  z-index: 2200;
+  width: min(calc(100% - 30px), 920px);
+  padding: 15px;
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(5,8,22,0.86);
+  backdrop-filter: blur(26px);
+  box-shadow: 0 28px 90px rgba(0,0,0,0.48);
+  transition: 0.45s cubic-bezier(.2,.8,.2,1);
+}
+
+.briefing-dock.active {
+  transform: translateX(-50%) translateY(0);
+}
+
+.briefing-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 11px;
+}
+
+.briefing-persona {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.briefing-orb {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--cyan), var(--green));
+  color: #03111b;
+  box-shadow: 0 0 34px rgba(34,211,238,0.48);
+  position: relative;
+}
+
+.briefing-orb.speaking::before,
+.briefing-orb.speaking::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid rgba(34,211,238,0.55);
+  animation: briefingPulse 1.28s infinite;
+}
+
+.briefing-orb.speaking::after {
+  inset: -16px;
+  animation-delay: 0.35s;
+}
+
+@keyframes briefingPulse {
+  0% { transform: scale(0.92); opacity: 0.9; }
+  100% { transform: scale(1.28); opacity: 0; }
+}
+
+.briefing-name {
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.briefing-name span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin-top: 3px;
+}
+
+.briefing-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.briefing-btn {
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: white;
+  border-radius: 999px;
+  padding: 9px 12px;
+  font-size: 0.82rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.briefing-btn:hover {
+  background: rgba(34,211,238,0.13);
+  border-color: rgba(34,211,238,0.36);
+}
+
+.briefing-subtitle {
+  min-height: 58px;
+  border-radius: 17px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.055);
+  padding: 13px 15px;
+  color: #eaf8ff;
+  font-weight: 750;
+}
+
+.briefing-bars {
+  display: flex;
+  align-items: end;
+  gap: 4px;
+  height: 28px;
+  margin-left: auto;
+}
+
+.briefing-bars span {
+  width: 4px;
+  height: 8px;
+  border-radius: 99px;
+  background: linear-gradient(var(--cyan), var(--green));
+  opacity: 0.42;
+}
+
+.briefing-bars.active span {
+  animation: briefingBar 0.72s infinite ease-in-out;
+}
+
+.briefing-bars span:nth-child(2) { animation-delay: 0.08s; }
+.briefing-bars span:nth-child(3) { animation-delay: 0.16s; }
+.briefing-bars span:nth-child(4) { animation-delay: 0.24s; }
+.briefing-bars span:nth-child(5) { animation-delay: 0.32s; }
+
+@keyframes briefingBar {
+  0%, 100% { height: 7px; opacity: 0.42; }
+  50% { height: 27px; opacity: 1; }
+}
+
+.briefing-focus {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.34), transparent 22%, transparent 76%, rgba(0,0,0,0.42));
+  opacity: 0;
+  transition: 0.5s ease;
+}
+
+.briefing-focus.active {
+  opacity: 1;
+}
+
+.executive-flash {
+  position: fixed;
+  top: 94px;
+  right: 22px;
+  z-index: 2100;
+  width: min(360px, calc(100vw - 34px));
+  padding: 16px;
+  border-radius: 21px;
+  border: 1px solid rgba(34,211,238,0.3);
+  background: rgba(5,8,22,0.84);
+  backdrop-filter: blur(22px);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+  transform: translateX(125%);
+  opacity: 0;
+  transition: 0.45s ease;
+}
+
+.executive-flash.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.executive-flash strong {
+  display: block;
+  color: var(--cyan);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  margin-bottom: 7px;
+}
+
+.executive-flash p {
+  color: #ecf9ff;
+  font-size: 0.95rem;
+  font-weight: 850;
+}
+
+@media (max-width: 680px) {
+  .briefing-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .briefing-controls {
+    width: 100%;
+  }
+
+  .briefing-btn {
+    flex: 1;
+  }
+
+  .executive-flash {
+    left: 14px;
+    right: 14px;
+    width: auto;
+  }
+}
+```
+
+---
+
+
+
+```html
+<body>
+```
+
+Paste this right after it:
+
+```html
+<!-- EXECUTIVE BRIEFING START SCREEN -->
+<div class="executive-gate" id="executiveGate">
+  <div class="executive-card">
+    <div class="executive-inner">
+      <div class="executive-badge">VD</div>
+
+      <h2>
+        Begin <span>Executive Briefing</span>
+      </h2>
+
+      <p>
+        This portfolio is presented like a private candidate briefing. A male executive assistant
+        will speak continuously while you browse, highlighting why Vraj Desai is a strong IT support,
+        endpoint, and automation candidate.
+      </p>
+
+      <div class="executive-actions">
+        <button class="btn btn-primary" id="beginBriefing">
+          <i class="fa-solid fa-play"></i>
+          Begin Executive Briefing
+        </button>
+
+        <button class="btn btn-secondary" id="silentBriefing">
+          <i class="fa-solid fa-volume-xmark"></i>
+          View Without Voice
+        </button>
       </div>
-      <div class="px-3 py-1 bg-white/10 rounded-full text-xs">SECRETARY BRIEFING MODE</div>
+
+      <div class="executive-small">
+        Audio begins after one click because modern browsers block automatic sound.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="briefing-focus" id="briefingFocus"></div>
+
+<div class="executive-flash" id="executiveFlash">
+  <strong>Executive Note</strong>
+  <p id="executiveFlashText">Candidate briefing ready.</p>
+</div>
+
+<!-- EXECUTIVE VOICE DOCK -->
+<div class="briefing-dock" id="briefingDock">
+  <div class="briefing-top">
+    <div class="briefing-persona">
+      <div class="briefing-orb" id="briefingOrb">
+        <i class="fa-solid fa-user-tie"></i>
+      </div>
+
+      <div class="briefing-name">
+        Executive Assistant Briefing
+        <span id="briefingStatus">Candidate dossier: Vraj Desai</span>
+      </div>
+
+      <div class="briefing-bars" id="briefingBars">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
     </div>
 
-    <div class="flex items-center gap-x-3">
-      <button onclick="playFullBriefing()" id="play-btn"
-              class="px-8 py-2.5 bg-[#00f5ff] text-black font-semibold rounded-2xl flex items-center gap-x-2 hover:bg-white active:scale-[0.985]">
-        <i class="fa-solid fa-play mr-1" id="play-icon"></i>
-        <span id="play-text">PLAY SECRETARY BRIEFING</span>
+    <div class="briefing-controls">
+      <button class="briefing-btn" id="pauseBriefing">
+        <i class="fa-solid fa-pause"></i>
+        Pause
       </button>
-      <button onclick="stopNarration()" class="px-5 py-2.5 border border-white/20 rounded-2xl hover:bg-white/5 text-sm">Stop</button>
+
+      <button class="briefing-btn" id="resumeBriefing">
+        <i class="fa-solid fa-play"></i>
+        Resume
+      </button>
+
+      <button class="briefing-btn" id="toggleBriefingAmbient">
+        <i class="fa-solid fa-wave-square"></i>
+        Ambient On
+      </button>
     </div>
   </div>
 
-  <!-- HERO -->
-  <section class="scene flex items-center justify-center min-h-screen pt-16 relative bg-[#050505]">
-    <div class="max-w-4xl text-center px-6">
-      <div class="inline-block px-5 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 text-sm">PERSONAL SECRETARY BRIEFING • 2026</div>
-      
-      <h1 class="font-display text-7xl md:text-8xl tracking-tighter leading-none mb-6">
-        Mr. [Boss],<br>
-        <span class="neon-cyan">I’d like to bring someone exceptional to your attention.</span>
-      </h1>
-      <p class="text-2xl text-white/70 max-w-lg mx-auto">Vraj Desai — spoken personally by his secretary.</p>
-      
-      <div class="mt-10">
-        <button onclick="playFullBriefing()" 
-                class="px-10 py-5 text-xl font-semibold bg-white text-black rounded-3xl flex items-center gap-x-3 mx-auto hover:bg-[#00f5ff]">
-          <i class="fa-solid fa-play mr-2"></i> START THE BRIEFING (MALE VOICE)
-        </button>
-        <p class="text-xs text-white/40 mt-4">Continuous narration • Male voice • No breaks</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SCENES (visual only – narration is continuous) -->
-  <section class="scene flex items-center bg-[#0a0a0a] px-6 py-20">
-    <div class="max-w-5xl mx-auto">
-      <div class="uppercase tracking-[4px] text-xs text-[#39ff14] mb-2">SCENE 01</div>
-      <h2 class="font-display text-6xl tracking-tighter mb-8">6+ years turning chaos into reliable systems</h2>
-      <div class="max-w-2xl text-2xl text-white/90">45 devices daily • 500+ enterprise endpoints • Zero data loss migrations • 20+ live automations shipped</div>
-    </div>
-  </section>
-
-  <section class="scene flex items-center bg-[#111] px-6 py-20">
-    <div class="max-w-5xl mx-auto">
-      <div class="uppercase tracking-[4px] text-xs text-[#39ff14] mb-2">SCENE 02</div>
-      <h2 class="font-display text-6xl tracking-tighter mb-8">From Apple retail to Stryker Fortune 500</h2>
-      <div class="max-w-2xl text-2xl text-white/90">Keeping high-traffic stores alive and enterprise medical devices running without downtime.</div>
-    </div>
-  </section>
-
-  <section class="scene flex items-center bg-[#0a0a0a] px-6 py-20">
-    <div class="max-w-5xl mx-auto">
-      <div class="uppercase tracking-[4px] text-xs text-[#39ff14] mb-2">SCENE 03</div>
-      <h2 class="font-display text-6xl tracking-tighter mb-8">His neural arsenal</h2>
-      <div class="grid md:grid-cols-3 gap-6 text-xl">
-        <div class="p-8 bg-white/5 rounded-3xl">Field &amp; Endpoint Mastery</div>
-        <div class="p-8 bg-white/5 rounded-3xl">AI Automation Builder (n8n • Grok AI • JavaScript)</div>
-        <div class="p-8 bg-white/5 rounded-3xl">CCNA • MD-102 • SAP S/4HANA</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="scene flex items-center justify-center bg-[#050505] px-6 py-20 min-h-[70vh]">
-    <div class="max-w-3xl text-center">
-      <h2 class="font-display text-6xl tracking-tighter mb-6">I highly recommend Vraj for your team.</h2>
-      <p class="text-2xl text-white/70 mb-10">Cork, Ireland • Open to Field Service, Endpoint &amp; Automation roles</p>
-      
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="mailto:vrajdesai10@gmail.com" class="px-10 py-4 bg-[#00f5ff] text-black rounded-3xl font-semibold flex items-center justify-center gap-x-3">Email Vraj</a>
-        <a href="tel:+353861653233" class="px-10 py-4 border border-white/30 rounded-3xl font-semibold flex items-center justify-center gap-x-3">+353 86 165 3233</a>
-      </div>
-    </div>
-  </section>
-
-  <script>
-    let synth = window.speechSynthesis;
-    let currentUtterance = null;
-
-    // Full continuous secretary briefing script (male voice, no breaks)
-    const fullBriefing = `Mr. Thompson, I wanted to personally bring this candidate to your attention. Vraj Desai is one of the strongest IT professionals I have come across in a long time. With over six years of hands-on experience, he has consistently turned complex technical challenges into reliable, scalable systems. He manages forty-five devices daily across high-traffic environments and has supported over five hundred enterprise endpoints with zero data loss during critical migrations. From keeping a busy Apple retail store running smoothly for ten thousand customers a week to delivering enterprise deployments at Stryker, a Fortune 500 medical device company, Vraj has proven himself time and again. He is now building powerful AI-driven automations using n8n, Grok AI, and JavaScript that are already delivering real results. He holds a CCNA and Microsoft MD-102 certification and is based in Cork, Ireland. I highly recommend Vraj Desai for any Field Service, Endpoint Management, or Automation role. He is ready to deliver from day one.`;
-
-    function getMaleVoice() {
-      const voices = synth.getVoices();
-      // Prefer deep male voices
-      const malePreferences = ['Male', 'David', 'Mark', 'James', 'Daniel', 'George', 'UK English Male', 'US English Male'];
-      
-      for (let pref of malePreferences) {
-        const voice = voices.find(v => v.name.toLowerCase().includes(pref.toLowerCase()) || v.lang.includes('en'));
-        if (voice) return voice;
-      }
-      // Fallback to any English voice
-      return voices.find(v => v.lang.includes('en')) || voices[0];
-    }
-
-    function playFullBriefing() {
-      stopNarration();
-
-      const utterance = new SpeechSynthesisUtterance(fullBriefing);
-      utterance.rate = 1.05;        // Natural, slightly professional pace
-      utterance.pitch = 0.95;       // Slightly deeper male tone
-      utterance.volume = 0.95;
-
-      const maleVoice = getMaleVoice();
-      if (maleVoice) utterance.voice = maleVoice;
-
-      currentUtterance = utterance;
-
-      utterance.onend = () => {
-        document.getElementById('play-icon').classList.remove('fa-pause');
-        document.getElementById('play-icon').classList.add('fa-play');
-        document.getElementById('play-text').textContent = 'PLAY SECRETARY BRIEFING';
-      };
-
-      synth.speak(utterance);
-
-      // Update button
-      document.getElementById('play-icon').classList.remove('fa-play');
-      document.getElementById('play-icon').classList.add('fa-pause');
-      document.getElementById('play-text').textContent = 'BRIEFING IN PROGRESS';
-    }
-
-    function stopNarration() {
-      if (synth.speaking) synth.cancel();
-      document.getElementById('play-icon').classList.remove('fa-pause');
-      document.getElementById('play-icon').classList.add('fa-play');
-      document.getElementById('play-text').textContent = 'PLAY SECRETARY BRIEFING';
-    }
-
-    // Load voices
-    window.speechSynthesis.onvoiceschanged = () => {};
-
-    // Keyboard support
-    document.addEventListener('keydown', function(e) {
-      if (e.key === ' ' || e.key === 'k') {
-        e.preventDefault();
-        if (synth.speaking) stopNarration();
-        else playFullBriefing();
-      }
-    });
-
-    console.log('%c[NEURAL REEL] Secretary briefing mode ready with male voice.', 'color:#00f5ff');
-  </script>
-</body>
-</html>
+  <div class="briefing-subtitle" id="briefingSubtitle">
+    Press “Begin Executive Briefing” to start the continuous candidate briefing.
+  </div>
+</div>
 ```
+
+---
+
+
+
+```html
+<script>
+/* ==========================================================
+   EXECUTIVE ASSISTANT CONTINUOUS MALE BRIEFING ENGINE
+   Candidate: Vraj Desai
+   ========================================================== */
+
+(function () {
+  const gate = document.getElementById("executiveGate");
+  const beginBriefing = document.getElementById("beginBriefing");
+  const silentBriefing = document.getElementById("silentBriefing");
+
+  const briefingDock = document.getElementById("briefingDock");
+  const briefingSubtitle = document.getElementById("briefingSubtitle");
+  const briefingOrb = document.getElementById("briefingOrb");
+  const briefingBars = document.getElementById("briefingBars");
+  const briefingStatus = document.getElementById("briefingStatus");
+
+  const pauseBriefing = document.getElementById("pauseBriefing");
+  const resumeBriefing = document.getElementById("resumeBriefing");
+  const toggleBriefingAmbient = document.getElementById("toggleBriefingAmbient");
+
+  const briefingFocus = document.getElementById("briefingFocus");
+  const executiveFlash = document.getElementById("executiveFlash");
+  const executiveFlashText = document.getElementById("executiveFlashText");
+
+  let started = false;
+  let paused = false;
+  let voiceEnabled = true;
+  let ambientEnabled = true;
+  let currentSectionId = "home";
+  let sectionSentenceIndex = {};
+  let globalIndex = 0;
+
+  let audioCtx = null;
+  let masterGain = null;
+  let humOsc = null;
+  let pulseOsc = null;
+  let beepTimer = null;
+  let silentTicker = null;
+
+  const sectionBriefing = {
+    home: [
+      "Sir, you are viewing Vraj Desai, an IT Field Service Engineer with a strong endpoint and automation profile.",
+      "This candidate combines Apple trained troubleshooting, CCNA networking, Microsoft endpoint administration, and field service experience.",
+      "His profile is not limited to support. He also builds automation systems that improve IT response and visibility."
+    ],
+
+    about: [
+      "Sir, Vraj’s strength is practical execution. He can work at the user desk, in the ticket queue, or inside a technical deployment.",
+      "His background connects customer facing service, enterprise support, endpoint operations, and modern workflow automation.",
+      "He understands that IT support is not only about fixing devices. It is about protecting uptime and business continuity."
+    ],
+
+    skills: [
+      "At skill level, the candidate covers networking, Microsoft 365, Active Directory, Azure AD, ServiceNow, and endpoint support.",
+      "He also brings break fix support, PC imaging, laptop builds, mobile device enrolment, and documentation discipline.",
+      "The differentiator is automation. N8N, Grok AI, Airtable, Telegram bots, JavaScript, and ITSM logic are already in his project work."
+    ],
+
+    projects: [
+      "Sir, this is where the candidate becomes more interesting. His projects are live operational systems, not decorative portfolio cards.",
+      "He built AI ticket classification with Grok, N8N workflow automation, Airtable ticket logging, and Telegram based real time alerts.",
+      "He also created system monitoring that detects downtime, records incidents, and sends recovery notifications automatically."
+    ],
+
+    experience: [
+      "Professionally, Vraj is currently supporting enterprise IT operations at Stryker through Pomeroy Technologies in Cork.",
+      "His work includes break fix repairs, hardware deployments, PC imaging, laptop builds, mobile enrolment, and ServiceNow incident handling.",
+      "Before that, he gained Apple support discipline and supported a forty five device retail estate at Sainsbury’s."
+    ],
+
+    education: [
+      "Academically, Vraj combines business management with data analytics, which gives him both technical and commercial perspective.",
+      "This matters because strong IT support professionals must understand impact, not just the technical symptom.",
+      "His education supports communication, analysis, reporting, and practical decision making in business environments."
+    ],
+
+    certifications: [
+      "The candidate has backed his experience with verified learning, including CCNA and Microsoft MD one zero two.",
+      "He also has service desk, SAP, data analytics, and networking certifications that strengthen his enterprise readiness.",
+      "These credentials suggest a candidate who keeps improving and aligns his learning with real IT operations."
+    ],
+
+    contact: [
+      "Sir, the conclusion is clear. Vraj Desai is suitable for IT Field Service, Endpoint Support, Desktop Support, Service Desk, and IT Automation roles.",
+      "He offers the rare mix of hands on user support and automation thinking.",
+      "If the role needs someone who can support users, protect uptime, document clearly, and reduce repetitive work, this candidate is worth interviewing."
+    ]
+  };
+
+  const globalBriefing = [
+    "Executive note. The candidate’s profile is strongest where hands on IT support meets automation.",
+    "Recruiter signal. Vraj can support users today and improve the support process tomorrow.",
+    "Candidate strength. Enterprise field support, Apple troubleshooting discipline, and ServiceNow experience are all visible here.",
+    "Candidate differentiator. His automation projects show initiative beyond standard service desk responsibilities.",
+    "Hiring signal. This is a practical IT professional who can operate under pressure and still think about process improvement."
+  ];
+
+  const flashNotes = {
+    home: "Strong opening: IT support, endpoint operations, Apple training, CCNA, MD-102, and automation.",
+    about: "Profile angle: practical, hands-on, documentation-focused, and business-aware.",
+    skills: "Skill signal: support fundamentals plus automation capability.",
+    projects: "Proof signal: live N8N, Grok AI, Airtable, Telegram, and monitoring workflows.",
+    experience: "Experience signal: Stryker, Apple, Sainsbury’s, ServiceNow, deployments, and endpoints.",
+    education: "Education signal: business management plus data analytics.",
+    certifications: "Credential signal: CCNA, MD-102, service desk, SAP, networking, and analytics.",
+    contact: "Action signal: strong candidate for IT support, endpoint, field service, and automation roles."
+  };
+
+  Object.keys(sectionBriefing).forEach(key => {
+    sectionSentenceIndex[key] = 0;
+  });
+
+  function hideGate() {
+    gate.classList.add("hidden");
+
+    setTimeout(() => {
+      gate.style.display = "none";
+    }, 800);
+  }
+
+  function showDock() {
+    briefingDock.classList.add("active");
+    briefingFocus.classList.add("active");
+  }
+
+  function showFlash(text) {
+    executiveFlashText.textContent = text;
+    executiveFlash.classList.add("show");
+
+    clearTimeout(showFlash.timer);
+    showFlash.timer = setTimeout(() => {
+      executiveFlash.classList.remove("show");
+    }, 4300);
+  }
+
+  function getVoicesSafely() {
+    if (!("speechSynthesis" in window)) return [];
+    return window.speechSynthesis.getVoices() || [];
+  }
+
+  function pickMaleVoice() {
+    const voices = getVoicesSafely();
+
+    const maleVoicePatterns = [
+      /Google UK English Male/i,
+      /Microsoft.*David/i,
+      /Microsoft.*Mark/i,
+      /Microsoft.*Ryan/i,
+      /Microsoft.*George/i,
+      /Microsoft.*Guy/i,
+      /Daniel/i,
+      /Alex/i,
+      /Fred/i,
+      /Arthur/i,
+      /Oliver/i,
+      /Thomas/i,
+      /Male/i
+    ];
+
+    for (const pattern of maleVoicePatterns) {
+      const match = voices.find(v => pattern.test(v.name) && /en/i.test(v.lang));
+      if (match) return match;
+    }
+
+    return (
+      voices.find(v => /en-GB/i.test(v.lang)) ||
+      voices.find(v => /en-US/i.test(v.lang)) ||
+      voices.find(v => /en/i.test(v.lang)) ||
+      null
+    );
+  }
+
+  function nextBriefingLine() {
+    const sectionLines = sectionBriefing[currentSectionId] || sectionBriefing.home;
+
+    let index = sectionSentenceIndex[currentSectionId] || 0;
+    let line = sectionLines[index];
+
+    sectionSentenceIndex[currentSectionId] = (index + 1) % sectionLines.length;
+
+    // Every few sentences, insert a global executive note to keep it feeling continuous and premium.
+    if (Math.random() < 0.22) {
+      line = globalBriefing[globalIndex % globalBriefing.length];
+      globalIndex++;
+    }
+
+    return line;
+  }
+
+  function updateSpeakingUI(isSpeaking) {
+    briefingOrb.classList.toggle("speaking", isSpeaking);
+    briefingBars.classList.toggle("active", isSpeaking);
+
+    briefingStatus.textContent = isSpeaking
+      ? "Male executive assistant speaking"
+      : paused
+        ? "Briefing paused"
+        : "Preparing next executive note";
+  }
+
+  function speakLoop() {
+    if (!started || paused || !voiceEnabled) return;
+
+    if (!("speechSynthesis" in window)) {
+      briefingSubtitle.textContent = "Voice narration is not supported in this browser.";
+      briefingStatus.textContent = "Voice unsupported";
+      return;
+    }
+
+    const line = nextBriefingLine();
+
+    briefingSubtitle.textContent = line;
+    showFlash(flashNotes[currentSectionId] || "Candidate briefing in progress.");
+
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(line);
+    const selectedVoice = pickMaleVoice();
+
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+    }
+
+    utterance.lang = selectedVoice ? selectedVoice.lang : "en-GB";
+    utterance.rate = 1.02;
+    utterance.pitch = 0.82;
+    utterance.volume = 0.96;
+
+    utterance.onstart = () => {
+      updateSpeakingUI(true);
+    };
+
+    utterance.onend = () => {
+      updateSpeakingUI(false);
+
+      // Almost no dead air. The ambient bed continues underneath.
+      if (started && !paused && voiceEnabled) {
+        setTimeout(speakLoop, 80);
+      }
+    };
+
+    utterance.onerror = () => {
+      updateSpeakingUI(false);
+
+      if (started && !paused && voiceEnabled) {
+        setTimeout(speakLoop, 250);
+      }
+    };
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function startAmbient() {
+    if (!ambientEnabled) return;
+
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    if (audioCtx.state === "suspended") {
+      audioCtx.resume();
+    }
+
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.038;
+    masterGain.connect(audioCtx.destination);
+
+    humOsc = audioCtx.createOscillator();
+    humOsc.type = "sine";
+    humOsc.frequency.value = 68;
+
+    const humGain = audioCtx.createGain();
+    humGain.gain.value = 0.62;
+
+    humOsc.connect(humGain);
+    humGain.connect(masterGain);
+    humOsc.start();
+
+    pulseOsc = audioCtx.createOscillator();
+    pulseOsc.type = "triangle";
+    pulseOsc.frequency.value = 136;
+
+    const pulseGain = audioCtx.createGain();
+    pulseGain.gain.value = 0.06;
+
+    pulseOsc.connect(pulseGain);
+    pulseGain.connect(masterGain);
+    pulseOsc.start();
+
+    beepTimer = setInterval(() => {
+      if (!ambientEnabled || !audioCtx || !masterGain) return;
+
+      const beep = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      beep.type = "sine";
+      beep.frequency.value = 580 + Math.random() * 460;
+
+      gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.055, audioCtx.currentTime + 0.014);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.13);
+
+      beep.connect(gain);
+      gain.connect(masterGain);
+
+      beep.start();
+      beep.stop(audioCtx.currentTime + 0.15);
+    }, 3200);
+  }
+
+  function stopAmbient() {
+    try {
+      if (humOsc) humOsc.stop();
+      if (pulseOsc) pulseOsc.stop();
+      if (masterGain) masterGain.disconnect();
+      clearInterval(beepTimer);
+    } catch (e) {}
+
+    humOsc = null;
+    pulseOsc = null;
+    masterGain = null;
+  }
+
+  function startSilentTicker() {
+    clearInterval(silentTicker);
+
+    silentTicker = setInterval(() => {
+      if (!started || !voiceEnabled) {
+        const line = nextBriefingLine();
+        briefingSubtitle.textContent = line;
+        showFlash(flashNotes[currentSectionId] || "Candidate briefing in progress.");
+      }
+    }, 5000);
+  }
+
+  function beginExecutiveBriefing() {
+    started = true;
+    paused = false;
+    voiceEnabled = true;
+    ambientEnabled = true;
+
+    hideGate();
+    showDock();
+    startAmbient();
+
+    briefingStatus.textContent = "Male executive assistant speaking";
+
+    setTimeout(() => {
+      speakLoop();
+    }, 450);
+  }
+
+  function beginSilentBriefing() {
+    started = true;
+    paused = false;
+    voiceEnabled = false;
+    ambientEnabled = false;
+
+    hideGate();
+    showDock();
+
+    briefingStatus.textContent = "Silent executive briefing mode";
+    briefingSubtitle.textContent = nextBriefingLine();
+
+    toggleBriefingAmbient.innerHTML = '<i class="fa-solid fa-wave-square"></i> Ambient Off';
+
+    startSilentTicker();
+  }
+
+  beginBriefing.addEventListener("click", beginExecutiveBriefing);
+  silentBriefing.addEventListener("click", beginSilentBriefing);
+
+  pauseBriefing.addEventListener("click", () => {
+    paused = true;
+
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+
+    updateSpeakingUI(false);
+    briefingStatus.textContent = "Briefing paused";
+  });
+
+  resumeBriefing.addEventListener("click", () => {
+    if (!started) return;
+
+    paused = false;
+    voiceEnabled = true;
+    briefingStatus.textContent = "Resuming male executive briefing";
+    speakLoop();
+  });
+
+  toggleBriefingAmbient.addEventListener("click", () => {
+    ambientEnabled = !ambientEnabled;
+
+    if (ambientEnabled) {
+      toggleBriefingAmbient.innerHTML = '<i class="fa-solid fa-wave-square"></i> Ambient On';
+      startAmbient();
+    } else {
+      toggleBriefingAmbient.innerHTML = '<i class="fa-solid fa-wave-square"></i> Ambient Off';
+      stopAmbient();
+    }
+  });
+
+  // Watch current portfolio section.
+  const sections = document.querySelectorAll("section[id]");
+
+  const sectionObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          currentSectionId = entry.target.id;
+
+          if (started) {
+            showFlash(flashNotes[currentSectionId] || "Candidate briefing in progress.");
+          }
+        }
+      });
+    },
+    { threshold: 0.58 }
+  );
+
+  sections.forEach(section => sectionObserver.observe(section));
+
+  // Load voices in browsers that populate them asynchronously.
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.onvoiceschanged = () => {
+      window.speechSynthesis.getVoices();
+    };
+  }
+
+  // Keyboard shortcuts for recruiter/boss:
+  // B = pause/resume briefing
+  // M = ambient on/off
+  document.addEventListener("keydown", e => {
+    if (e.key.toLowerCase() === "b") {
+      if (paused) {
+        resumeBriefing.click();
+      } else {
+        pauseBriefing.click();
+      }
+    }
+
+    if (e.key.toLowerCase() === "m") {
+      toggleBriefingAmbient.click();
+    }
+  });
+})();
+</script>
+```
+
+---
