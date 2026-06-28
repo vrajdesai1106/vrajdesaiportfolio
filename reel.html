@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VRAJ DESAI • IT REEL</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+  
+  body {
+    font-family: 'Inter', system_ui, sans-serif;
+  }
+  
+  .font-display {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-weight: 600;
+  }
+
+  .reel-container {
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+  }
+  
+  .scene {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .neon-text {
+    color: #00f5ff;
+    text-shadow: 0 0 10px #00f5ff, 0 0 20px #00f5ff;
+  }
+
+  .section-header {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .section-header::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, #00f5ff, #39ff14);
+    border-radius: 3px;
+  }
+
+  .it-card {
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .it-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  }
+
+  .video-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(to right, #00f5ff, #39ff14);
+    z-index: 50;
+    transition: width 0.1s ease-out;
+  }
+
+  .floating-icon {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .scene-header {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.05;
+    font-weight: 700;
+  }
+
+  .metric {
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+</head>
+<body class="bg-[#0a0a0a] text-white overflow-x-hidden">
+  <!-- Video Progress Bar -->
+  <div id="progress-bar" class="video-progress w-0"></div>
+
+  <!-- Sticky Reel Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-40 bg-[#0a0a0a]/90 backdrop-blur-lg border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-x-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#00f5ff] to-[#39ff14] flex items-center justify-center">
+          <i class="fa-solid fa-microchip text-black text-xl"></i>
+        </div>
+        <div>
+          <span class="font-display text-2xl font-bold tracking-tighter">VRAJ</span>
+          <span class="font-display text-2xl font-bold tracking-tighter text-[#00f5ff]">REEL</span>
+        </div>
+      </div>
+      
+      <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+        <a href="#about" class="hover:text-[#00f5ff] transition-colors">Origin</a>
+        <a href="#experience" class="hover:text-[#00f5ff] transition-colors">Field Ops</a>
+        <a href="#skills" class="hover:text-[#00f5ff] transition-colors">Arsenal</a>
+        <a href="#projects" class="hover:text-[#00f5ff] transition-colors">Builds</a>
+        <a href="#certs" class="hover:text-[#00f5ff] transition-colors">Credentials</a>
+      </div>
+      
+      <div class="flex items-center gap-x-3">
+        <a href="https://docs.google.com/document/d/1EQuJRdfpZ18raU9ZUloHMZZ4kJrOBDvwHV5ETxVl1N4/edit" 
+           target="_blank"
+           class="px-5 py-2.5 rounded-2xl bg-white text-black text-sm font-semibold flex items-center gap-x-2 hover:bg-[#00f5ff] transition-all active:scale-[0.985]">
+          <i class="fa-solid fa-download"></i>
+          <span class="hidden sm:inline">Resume</span>
+        </a>
+        <a href="#contact" class="px-5 py-2.5 rounded-2xl border border-white/20 hover:bg-white/5 text-sm font-semibold transition-all">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO / OPENING SCENE -->
+  <section class="scene min-h-screen flex items-center pt-16 relative overflow-hidden bg-[#0a0a0a]">
+    <div class="max-w-5xl mx-auto px-6 relative z-10">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-x-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6">
+          <div class="w-2 h-2 bg-[#39ff14] rounded-full animate-pulse"></div>
+          <span class="text-sm font-medium tracking-widest">NOW PLAYING • IT FIELD SERVICE REEL</span>
+        </div>
+        
+        <h1 class="scene-header font-display tracking-tighter leading-none mb-4">
+          VRAJ DESAI<br>
+          <span class="neon-text">IT FIELD SERVICE</span><br>
+          ENGINEER
+        </h1>
+        
+        <p class="max-w-lg text-xl text-white/70 mb-10">
+          Apple-trained • CCNA + MD-102 • Building AI automations that actually ship.
+        </p>
+        
+        <div class="flex flex-wrap gap-4">
+          <a href="#about" class="px-8 py-4 rounded-3xl bg-[#00f5ff] text-black font-semibold text-lg flex items-center gap-x-3 hover:bg-white transition-all active:scale-[0.985]">
+            START REEL <i class="fa-solid fa-play ml-1"></i>
+          </a>
+          <a href="#projects" class="px-8 py-4 rounded-3xl border border-white/30 hover:bg-white/5 font-semibold text-lg flex items-center gap-x-3 transition-all">
+            SEE THE BUILDS
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Floating IT Graphics -->
+    <div class="absolute right-10 top-1/3 hidden lg:block">
+      <div class="relative w-80 h-80">
+        <i class="fa-solid fa-laptop floating-icon absolute text-7xl text-[#00f5ff]/30" style="top:10%; left:20%"></i>
+        <i class="fa-solid fa-network-wired floating-icon absolute text-6xl text-[#39ff14]/30" style="top:40%; left:60%; animation-delay:1s"></i>
+        <i class="fa-solid fa-robot floating-icon absolute text-8xl text-[#00f5ff]/20" style="top:65%; left:15%; animation-delay:2s"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / ORIGIN STORY -->
+  <section id="about" class="scene min-h-screen flex items-center bg-[#111] py-20">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="grid md:grid-cols-12 gap-12 items-center">
+        <div class="md:col-span-7">
+          <div class="uppercase tracking-[3px] text-xs mb-3 text-[#00f5ff]">SCENE 01 • THE ORIGIN</div>
+          <h2 class="font-display text-6xl leading-none tracking-tighter mb-8">I fix things.<br>I build things.<br>I automate things.</h2>
+          
+          <div class="prose prose-invert max-w-none text-lg text-white/80">
+            <p>6+ years on the floor. From keeping a 45-device retail estate alive at Sainsbury’s (10,000 customers/week) to complex enterprise deployments at Stryker (Fortune 500 medical devices).</p>
+            <p class="mt-4">I’ve delivered zero-data-loss macOS migrations, managed ServiceNow queues at scale, and now I’m building AI-powered automation that makes teams faster.</p>
+          </div>
+        </div>
+        
+        <div class="md:col-span-5">
+          <div class="bg-[#1a1a1a] rounded-3xl p-8 border border-white/10">
+            <div class="grid grid-cols-2 gap-6">
+              <div>
+                <div class="text-5xl font-display font-bold metric">45+</div>
+                <div class="text-sm text-white/60 mt-1">Devices managed daily</div>
+              </div>
+              <div>
+                <div class="text-5xl font-display font-bold metric">20+</div>
+                <div class="text-sm text-white/60 mt-1">Live automations shipped</div>
+              </div>
+              <div>
+                <div class="text-5xl font-display font-bold metric">500+</div>
+                <div class="text-sm text-white/60 mt-1">Enterprise endpoints</div>
+              </div>
+              <div>
+                <div class="text-5xl font-display font-bold metric">0</div>
+                <div class="text-sm text-white/60 mt-1">Data loss migrations</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE / FIELD OPS -->
+  <section id="experience" class="scene min-h-screen py-20 bg-[#0a0a0a]">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="flex justify-between items-end mb-12">
+        <div>
+          <div class="uppercase tracking-[3px] text-xs mb-2 text-[#39ff14]">SCENE 02 • FIELD OPS</div>
+          <h2 class="font-display text-6xl tracking-tighter">Where the work happens</h2>
+        </div>
+      </div>
+      
+      <div class="space-y-6">
+        <!-- Stryker -->
+        <div class="it-card bg-[#111] border border-white/10 rounded-3xl p-8">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="text-[#00f5ff] font-semibold">IT Field Service Representative</div>
+              <div class="text-2xl font-display mt-1">Pomeroy Technologies @ Stryker</div>
+              <div class="text-white/60">Cork, Ireland • March 2026 – Present (2-year contract)</div>
+            </div>
+            <div class="text-right text-sm text-white/50">Fortune 500 • Medical Devices</div>
+          </div>
+          <ul class="mt-6 space-y-3 text-white/80">
+            <li class="flex gap-3"><span class="text-[#39ff14]">→</span> End-to-end ServiceNow incident management for 500+ devices with strict SLA &amp; regulatory compliance</li>
+            <li class="flex gap-3"><span class="text-[#39ff14]">→</span> Hardware deployments, PC imaging, laptop builds, and mobile device enrolment at scale</li>
+            <li class="flex gap-3"><span class="text-[#39ff14]">→</span> Break-fix repairs across enterprise campus while maintaining zero downtime targets</li>
+          </ul>
+        </div>
+        
+        <!-- Apple -->
+        <div class="it-card bg-[#111] border border-white/10 rounded-3xl p-8">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="text-[#00f5ff] font-semibold">IT Support Specialist</div>
+              <div class="text-2xl font-display mt-1">Apple</div>
+              <div class="text-white/60">London • Aug 2025 – Jan 2026</div>
+            </div>
+          </div>
+          <ul class="mt-6 space-y-3 text-white/80">
+            <li class="flex gap-3"><span class="text-[#39ff14]">→</span> Maintained 45-device retail estate with 99.8% uptime in high-traffic store (10k+ customers/week)</li>
+            <li class="flex gap-3"><span class="text-[#39ff14]">→</span> Apple-trained hardware &amp; software troubleshooting at scale</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS / ARSENAL -->
+  <section id="skills" class="scene py-20 bg-[#111]">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="uppercase tracking-[3px] text-xs mb-3 text-[#00f5ff]">SCENE 03 • THE ARSENAL</div>
+      <h2 class="font-display text-6xl tracking-tighter mb-12">Tools that actually move the needle</h2>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-[#1a1a1a] rounded-3xl p-8 border border-white/10">
+          <div class="text-[#39ff14] mb-4"><i class="fa-solid fa-tools text-3xl"></i></div>
+          <div class="font-semibold text-xl mb-4">Field &amp; Endpoint</div>
+          <div class="flex flex-wrap gap-2 text-sm">
+            <span class="px-4 py-1 bg-white/5 rounded-full">macOS / Windows</span>
+            <span class="px-4 py-1 bg-white/5 rounded-full">ServiceNow</span>
+            <span class="px-4 py-1 bg-white/5 rounded-full">MDM / Intune</span>
+            <span class="px-4 py-1 bg-white/5 rounded-full">Hardware Repair</span>
+          </div>
+        </div>
+        
+        <div class="bg-[#1a1a1a] rounded-3xl p-8 border border-white/10">
+          <div class="text-[#39ff14] mb-4"><i class="fa-solid fa-robot text-3xl"></i></div>
+          <div class="font-semibold text-xl mb-4">Automation &amp; AI</div>
+          <div class="flex flex-wrap gap-2 text-sm">
+            <span class="px-4 py-1 bg-white/5 rounded-full">n8n</span>
+            <span class="px-4 py-1 bg-white/5 rounded-full">Grok AI</span>
+            <span class="px-4 py-1 bg-white/5 rounded-full">Airtable</span>
+            <span class="px-4 py-1 bg-white/5 rounded-full">JavaScript</span>
+            <span class="px-4 py-1 bg-white/5 rounded-full">Telegram Bots</span>
+          </div>
+        </div>
+        
+        <div class="bg-[#1a1a1a] rounded-3xl p-8 border border-white/10">
+          <div class="text-[#39ff14] mb-4"><i class="fa-solid fa-certificate text-3xl"></i></div>
+          <div class="font-semibold text-xl mb-4">Core Certifications</div>
+          <div class="space-y-2 text-sm">
+            <div>CCNA • 2026</div>
+            <div>MD-102 Endpoint Administrator</div>
+            <div>SAP S/4HANA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS / BUILDS -->
+  <section id="projects" class="scene py-20 bg-[#0a0a0a]">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="uppercase tracking-[3px] text-xs mb-3 text-[#39ff14]">SCENE 04 • LIVE BUILDS</div>
+      <h2 class="font-display text-6xl tracking-tighter mb-12">Automation that actually works</h2>
+      
+      <div class="grid md:grid-cols-2 gap-6">
+        <a href="https://vrajdesai1106.github.io/vrajdesaiportfolio/automation.html" class="it-card group block bg-[#111] border border-white/10 rounded-3xl p-8 hover:border-[#00f5ff]">
+          <div class="flex justify-between">
+            <div>
+              <div class="font-semibold text-2xl group-hover:text-[#00f5ff]">AI Ticket Automation</div>
+              <div class="text-white/60 mt-1">n8n + Grok AI + Airtable + Telegram</div>
+            </div>
+            <div class="text-[#39ff14]"><i class="fa-solid fa-play text-xl"></i></div>
+          </div>
+          <div class="mt-8 text-sm">20+ real tickets processed • Auto-classification • Instant notifications</div>
+        </a>
+        
+        <a href="https://vrajdesai1106.github.io/vrajdesaiportfolio/automation.html" class="it-card group block bg-[#111] border border-white/10 rounded-3xl p-8 hover:border-[#00f5ff]">
+          <div class="flex justify-between">
+            <div>
+              <div class="font-semibold text-2xl group-hover:text-[#00f5ff]">System Health Monitor</div>
+              <div class="text-white/60 mt-1">Real-time uptime + daily digest</div>
+            </div>
+            <div class="text-[#39ff14]"><i class="fa-solid fa-play text-xl"></i></div>
+          </div>
+          <div class="mt-8 text-sm">12+ incidents tracked • Zero false positives</div>
+        </a>
+      </div>
+      
+      <div class="mt-6 text-center">
+        <a href="#contact" class="inline-flex items-center text-sm text-white/70 hover:text-white">View all projects on GitHub →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTS -->
+  <section id="certs" class="scene py-20 bg-[#111]">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="uppercase tracking-[3px] text-xs mb-3 text-[#00f5ff]">SCENE 05 • CREDENTIALS</div>
+      <h2 class="font-display text-6xl tracking-tighter mb-12">Verified. Battle-tested.</h2>
+      
+      <div class="grid md:grid-cols-2 gap-4 text-sm">
+        <div class="flex items-center gap-4 bg-[#1a1a1a] px-6 py-5 rounded-2xl border border-white/10">
+          <i class="fa-solid fa-certificate text-[#39ff14] text-2xl"></i>
+          <div>CCNA • Cisco • Jan 2026</div>
+        </div>
+        <div class="flex items-center gap-4 bg-[#1a1a1a] px-6 py-5 rounded-2xl border border-white/10">
+          <i class="fa-solid fa-certificate text-[#39ff14] text-2xl"></i>
+          <div>MD-102 Endpoint Administrator • Microsoft • 2025</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / FINAL SCENE -->
+  <section id="contact" class="scene min-h-[70vh] flex items-center bg-[#0a0a0a] py-20">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <div class="uppercase tracking-[3px] text-xs mb-4 text-[#39ff14]">FINAL SCENE • LET’S TALK</div>
+      <h2 class="font-display text-6xl tracking-tighter mb-4">Ready to build the next chapter?</h2>
+      <p class="text-xl text-white/70 mb-10">Cork, Ireland • Open to IT Field Service, Endpoint, Automation &amp; Hybrid roles</p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="mailto:vrajdesai10@gmail.com" class="px-10 py-4 bg-white text-black rounded-3xl font-semibold flex items-center justify-center gap-x-3 hover:bg-[#00f5ff]">
+          <i class="fa-solid fa-envelope"></i> Email Me
+        </a>
+        <a href="tel:+353861653233" class="px-10 py-4 border border-white/30 rounded-3xl font-semibold flex items-center justify-center gap-x-3 hover:bg-white/5">
+          <i class="fa-solid fa-phone"></i> +353 86 165 3233
+        </a>
+      </div>
+      
+      <div class="mt-12 text-xs text-white/50">Designed &amp; built by Vraj Desai • Keep rising 🚀</div>
+    </div>
+  </section>
+
+  <script>
+    // Progress bar
+    function updateProgress() {
+      const progressBar = document.getElementById('progress-bar');
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      progressBar.style.width = scrollPercent + '%';
+    }
+    
+    window.addEventListener('scroll', updateProgress);
+    
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+    
+    // Initialize
+    updateProgress();
+    
+    console.log('%c[IT REEL] Portfolio loaded successfully', 'color:#00f5ff');
+  </script>
+</body>
+</html>
