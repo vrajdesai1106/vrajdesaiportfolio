@@ -1,2087 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Vraj Desai | IT Field Service Engineer</title>
-
-  <meta name="description" content="Creative IT portfolio of Vraj Desai — IT Field Service Engineer, Apple-trained, CCNA certified, Microsoft MD-102 certified, and AI automation builder." />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  <style>
-    :root {
-      --bg: #050816;
-      --panel: rgba(255,255,255,0.075);
-      --panel2: rgba(255,255,255,0.12);
-      --line: rgba(255,255,255,0.14);
-      --text: #f4f7fb;
-      --muted: #9aa8bd;
-      --cyan: #22d3ee;
-      --green: #22c55e;
-      --blue: #4f46e5;
-      --pink: #ec4899;
-      --amber: #f59e0b;
-      --radius: 24px;
-      --max: 1180px;
-      --shadow: 0 30px 80px rgba(0,0,0,0.45);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: "Inter", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    #networkCanvas {
-      position: fixed;
-      inset: 0;
-      z-index: -4;
-      background:
-        radial-gradient(circle at 15% 20%, rgba(79,70,229,0.35), transparent 35%),
-        radial-gradient(circle at 85% 10%, rgba(34,211,238,0.25), transparent 32%),
-        radial-gradient(circle at 50% 85%, rgba(34,197,94,0.16), transparent 35%),
-        #050816;
-    }
-
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -3;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-      background-size: 52px 52px;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent 90%);
-    }
-
-    .progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--cyan), var(--green), var(--pink));
-      z-index: 999;
-      box-shadow: 0 0 24px rgba(34,211,238,0.75);
-    }
-
-    .topbar {
-      position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(calc(100% - 28px), var(--max));
-      z-index: 100;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(5,8,22,0.76);
-      backdrop-filter: blur(20px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: var(--shadow);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: "Space Grotesk", sans-serif;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-    }
-
-    .brand-mark {
-      width: 38px;
-      height: 38px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--cyan), var(--green));
-      color: #03111b;
-      font-weight: 900;
-      box-shadow: 0 0 30px rgba(34,211,238,0.45);
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    nav a {
-      padding: 9px 13px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-weight: 800;
-      border-radius: 999px;
-      transition: 0.25s ease;
-    }
-
-    nav a:hover,
-    nav a.active {
-      color: white;
-      background: rgba(255,255,255,0.09);
-    }
-
-    .resume-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--cyan), var(--green));
-      color: #03111b;
-      font-weight: 900;
-    }
-
-    .menu-btn {
-      display: none;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.08);
-      color: white;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      cursor: pointer;
-    }
-
-    .rail {
-      position: fixed;
-      right: 22px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      z-index: 90;
-    }
-
-    .rail a {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.45);
-      background: rgba(255,255,255,0.12);
-      transition: 0.25s;
-    }
-
-    .rail a.active {
-      height: 36px;
-      border-radius: 999px;
-      background: linear-gradient(var(--cyan), var(--green));
-      box-shadow: 0 0 24px rgba(34,211,238,0.55);
-    }
-
-    .scene {
-      position: fixed;
-      left: 22px;
-      top: 50%;
-      transform: translateY(-50%) rotate(-90deg);
-      transform-origin: left center;
-      color: var(--muted);
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      font-weight: 900;
-      z-index: 90;
-    }
-
-    section {
-      min-height: 100vh;
-      padding: 118px 22px 78px;
-      display: flex;
-      align-items: center;
-      position: relative;
-    }
-
-    .container {
-      width: min(100%, var(--max));
-      margin: 0 auto;
-    }
-
-    .kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(34,211,238,0.28);
-      background: rgba(34,211,238,0.08);
-      color: #b8f3ff;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-weight: 900;
-      margin-bottom: 18px;
-    }
-
-    h1,
-    h2,
-    h3 {
-      font-family: "Space Grotesk", sans-serif;
-    }
-
-    .title {
-      font-size: clamp(2rem, 5vw, 4.7rem);
-      line-height: 0.96;
-      letter-spacing: -0.065em;
-      margin-bottom: 18px;
-    }
-
-    .title span,
-    .hero-title span {
-      background: linear-gradient(135deg, white, var(--cyan), var(--green));
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .copy {
-      max-width: 760px;
-      color: var(--muted);
-      font-size: clamp(1rem, 1.7vw, 1.15rem);
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px) scale(0.98);
-      transition: 0.75s cubic-bezier(.2,.8,.2,1);
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 38px;
-      align-items: center;
-    }
-
-    .hero-title {
-      font-size: clamp(3rem, 8vw, 7.4rem);
-      line-height: 0.87;
-      letter-spacing: -0.08em;
-      margin-bottom: 22px;
-    }
-
-    .typed-line {
-      min-height: 34px;
-      color: #dffbff;
-      font-weight: 900;
-      font-size: clamp(1.05rem, 2vw, 1.5rem);
-      margin-bottom: 20px;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 10px;
-      height: 1.1em;
-      background: var(--cyan);
-      margin-left: 5px;
-      vertical-align: middle;
-      animation: blink 0.8s infinite;
-    }
-
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      51%, 100% { opacity: 0; }
-    }
-
-    .hero-copy {
-      color: var(--muted);
-      font-size: 1.08rem;
-      max-width: 730px;
-      margin-bottom: 28px;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 30px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 13px 18px;
-      border-radius: 999px;
-      font-weight: 900;
-      border: 1px solid var(--line);
-      cursor: pointer;
-      transition: 0.25s ease;
-      font-size: 0.95rem;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--cyan), var(--green));
-      color: #02101a;
-      box-shadow: 0 18px 45px rgba(34,211,238,0.3);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.08);
-      color: var(--text);
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(120px, 1fr));
-      gap: 12px;
-      max-width: 760px;
-    }
-
-    .stat {
-      padding: 16px;
-      border-radius: 18px;
-      background: var(--panel);
-      border: 1px solid var(--line);
-      backdrop-filter: blur(16px);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.8rem;
-      line-height: 1;
-      font-family: "Space Grotesk", sans-serif;
-    }
-
-    .stat span {
-      display: block;
-      margin-top: 7px;
-      color: var(--muted);
-      font-size: 0.82rem;
-      font-weight: 800;
-    }
-
-    .command-card {
-      border: 1px solid var(--line);
-      border-radius: 32px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.04));
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-      padding: 18px;
-      overflow: hidden;
-    }
-
-    .window {
-      border: 1px solid rgba(255,255,255,0.16);
-      border-radius: 22px;
-      overflow: hidden;
-      background: rgba(1,9,20,0.82);
-    }
-
-    .window-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 13px 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-    }
-
-    .dots {
-      display: flex;
-      gap: 7px;
-    }
-
-    .dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-    }
-
-    .red { background: #ff5f57; }
-    .yellow { background: #febc2e; }
-    .green { background: #28c840; }
-
-    .window-title {
-      font-size: 0.78rem;
-      color: var(--muted);
-      font-weight: 900;
-      letter-spacing: 0.08em;
-    }
-
-    .terminal {
-      padding: 18px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.88rem;
-      min-height: 340px;
-    }
-
-    .terminal-line {
-      margin-bottom: 12px;
-      color: #c9d7e8;
-    }
-
-    .prompt { color: var(--green); font-weight: 900; }
-    .cyan { color: var(--cyan); }
-    .amber { color: var(--amber); }
-
-    .scan-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .scan-tile {
-      min-height: 76px;
-      border-radius: 16px;
-      border: 1px solid rgba(34,211,238,0.2);
-      background: linear-gradient(135deg, rgba(34,211,238,0.12), rgba(79,70,229,0.08));
-      padding: 12px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .scan-tile::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 80%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-      animation: scanner 2.7s infinite;
-    }
-
-    @keyframes scanner {
-      to { left: 120%; }
-    }
-
-    .scan-tile i {
-      color: var(--cyan);
-      font-size: 1.25rem;
-      margin-bottom: 10px;
-    }
-
-    .scan-tile span {
-      display: block;
-      color: var(--muted);
-      font-size: 0.75rem;
-      font-weight: 900;
-    }
-
-    .about-grid,
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 28px;
-      margin-top: 34px;
-    }
-
-    .card {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--panel);
-      backdrop-filter: blur(18px);
-      box-shadow: var(--shadow);
-      padding: 26px;
-    }
-
-    .avatar {
-      width: 112px;
-      height: 112px;
-      border-radius: 32px;
-      display: grid;
-      place-items: center;
-      font-size: 2.6rem;
-      font-weight: 900;
-      color: #06111d;
-      background: linear-gradient(135deg, var(--cyan), var(--green));
-      box-shadow: 0 20px 60px rgba(34,211,238,0.28);
-      margin-bottom: 20px;
-      font-family: "Space Grotesk", sans-serif;
-    }
-
-    .card h3 {
-      font-size: 1.5rem;
-      letter-spacing: -0.04em;
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      color: var(--muted);
-      margin-bottom: 16px;
-    }
-
-    .info-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .info-list a,
-    .info-list div {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      color: #d9e6f7;
-      padding: 12px;
-      border-radius: 15px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      font-size: 0.92rem;
-      font-weight: 700;
-      word-break: break-word;
-    }
-
-    .info-list i {
-      width: 18px;
-      color: var(--cyan);
-    }
-
-    .note {
-      margin-top: 20px;
-      padding: 18px;
-      border-radius: 18px;
-      border: 1px solid rgba(34,197,94,0.22);
-      background: rgba(34,197,94,0.08);
-      color: #caffd8;
-      font-weight: 900;
-    }
-
-    .highlight-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 8px;
-    }
-
-    .highlight {
-      border-radius: 18px;
-      padding: 16px;
-      background: rgba(255,255,255,0.065);
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .highlight strong {
-      display: block;
-      font-size: 1.35rem;
-      color: var(--cyan);
-      font-family: "Space Grotesk", sans-serif;
-    }
-
-    .highlight span {
-      color: var(--muted);
-      font-size: 0.84rem;
-      font-weight: 800;
-    }
-
-    .skills-grid,
-    .cert-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-top: 34px;
-    }
-
-    .skill-card,
-    .cert-card,
-    .edu-card {
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: var(--panel);
-      padding: 22px;
-      min-height: 180px;
-      transition: 0.25s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .skill-card:hover,
-    .cert-card:hover,
-    .edu-card:hover,
-    .project-card:hover,
-    .timeline-card:hover {
-      transform: translateY(-7px);
-      border-color: rgba(34,211,238,0.42);
-      background: var(--panel2);
-    }
-
-    .skill-icon {
-      width: 48px;
-      height: 48px;
-      display: grid;
-      place-items: center;
-      border-radius: 15px;
-      background: rgba(34,211,238,0.12);
-      color: var(--cyan);
-      font-size: 1.35rem;
-      margin-bottom: 16px;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      color: #dbe7f7;
-      border: 1px solid rgba(255,255,255,0.09);
-      font-size: 0.78rem;
-      font-weight: 900;
-    }
-
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 16px;
-      margin-top: 34px;
-    }
-
-    .project-card {
-      grid-column: span 4;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--panel);
-      overflow: hidden;
-      transition: 0.25s ease;
-      display: flex;
-      flex-direction: column;
-      min-height: 330px;
-    }
-
-    .project-card.featured {
-      grid-column: span 6;
-    }
-
-    .project-visual {
-      height: 135px;
-      position: relative;
-      background:
-        radial-gradient(circle at 20% 30%, rgba(34,211,238,0.36), transparent 30%),
-        radial-gradient(circle at 80% 30%, rgba(236,72,153,0.25), transparent 32%),
-        linear-gradient(135deg, rgba(79,70,229,0.28), rgba(34,197,94,0.12));
-      overflow: hidden;
-    }
-
-    .project-visual::before {
-      content: "";
-      position: absolute;
-      inset: 18px;
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 18px;
-      background:
-        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
-        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
-      background-size: 22px 22px;
-    }
-
-    .node {
-      position: absolute;
-      width: 13px;
-      height: 13px;
-      border-radius: 50%;
-      background: var(--cyan);
-      box-shadow: 0 0 22px var(--cyan);
-      animation: pulse 2s infinite;
-    }
-
-    .n1 { top: 36px; left: 42px; }
-    .n2 { top: 72px; left: 52%; animation-delay: .3s; }
-    .n3 { bottom: 34px; right: 50px; animation-delay: .6s; }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.55); opacity: .55; }
-    }
-
-    .project-body {
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-
-    .meta {
-      color: var(--green);
-      font-weight: 900;
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .project-card h3 {
-      font-size: 1.35rem;
-      line-height: 1.15;
-      letter-spacing: -0.04em;
-      margin-bottom: 12px;
-    }
-
-    .project-card p {
-      color: var(--muted);
-      font-size: 0.94rem;
-      margin-bottom: 16px;
-    }
-
-    .project-actions {
-      margin-top: auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .mini-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #eaf6ff;
-      font-size: 0.82rem;
-      font-weight: 900;
-    }
-
-    .timeline {
-      margin-top: 38px;
-      position: relative;
-      display: grid;
-      gap: 16px;
-    }
-
-    .timeline::before {
-      content: "";
-      position: absolute;
-      left: 18px;
-      top: 12px;
-      bottom: 12px;
-      width: 2px;
-      background: linear-gradient(var(--cyan), var(--green), var(--pink));
-      opacity: 0.55;
-    }
-
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 54px 1fr;
-      gap: 16px;
-      position: relative;
-    }
-
-    .timeline-dot {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: #06111d;
-      border: 1px solid rgba(34,211,238,0.55);
-      color: var(--cyan);
-      z-index: 1;
-    }
-
-    .timeline-card {
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: var(--panel);
-      padding: 22px;
-      transition: 0.25s ease;
-    }
-
-    .timeline-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 12px;
-    }
-
-    .company {
-      color: var(--cyan);
-      font-weight: 900;
-      margin-top: 3px;
-    }
-
-    .date {
-      color: #dbe7f7;
-      font-weight: 900;
-      white-space: nowrap;
-      font-size: 0.9rem;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      height: max-content;
-    }
-
-    .timeline-card ul {
-      color: var(--muted);
-      padding-left: 19px;
-      display: grid;
-      gap: 7px;
-    }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-      margin-top: 34px;
-    }
-
-    .edu-card i,
-    .cert-card i {
-      color: var(--cyan);
-      margin-bottom: 14px;
-      font-size: 1.35rem;
-    }
-
-    .edu-card p,
-    .cert-card p {
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .cert-card a {
-      display: inline-flex;
-      margin-top: 12px;
-      color: #bff6ff;
-      font-weight: 900;
-      font-size: 0.88rem;
-    }
-
-    .copy-btn {
-      width: 100%;
-      margin-top: 16px;
-      border: none;
-    }
-
-    footer {
-      padding: 28px 22px 44px;
-      color: var(--muted);
-      text-align: center;
-      font-size: 0.92rem;
-    }
-
-    footer strong {
-      color: white;
-    }
-
-    @media (max-width: 980px) {
-      .hero-grid,
-      .about-grid,
-      .contact-grid,
-      .two-col {
-        grid-template-columns: 1fr;
-      }
-
-      .skills-grid,
-      .cert-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .project-card,
-      .project-card.featured {
-        grid-column: span 6;
-      }
-
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .rail,
-      .scene {
-        display: none;
-      }
-
-      nav {
-        position: fixed;
-        left: 14px;
-        right: 14px;
-        top: 76px;
-        display: none;
-        flex-direction: column;
-        align-items: stretch;
-        background: rgba(5,8,22,0.94);
-        border: 1px solid var(--line);
-        border-radius: 24px;
-        padding: 14px;
-        backdrop-filter: blur(20px);
-      }
-
-      nav.open {
-        display: flex;
-      }
-
-      .resume-btn {
-        display: none;
-      }
-
-      .menu-btn {
-        display: inline-grid;
-        place-items: center;
-      }
-    }
-
-    @media (max-width: 680px) {
-      .topbar {
-        top: 10px;
-        border-radius: 22px;
-      }
-
-      section {
-        padding: 96px 16px 58px;
-      }
-
-      .stats,
-      .skills-grid,
-      .highlight-row,
-      .cert-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .project-card,
-      .project-card.featured {
-        grid-column: span 12;
-      }
-
-      .timeline-top {
-        flex-direction: column;
-      }
-
-      .date {
-        width: fit-content;
-        white-space: normal;
-      }
-
-      .terminal {
-        font-size: 0.78rem;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VRAJ • NEURAL REEL • 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+  body { font-family: 'Inter', system_ui, sans-serif; }
+  .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; }
+  .neon-cyan { color: #00f5ff; text-shadow: 0 0 15px #00f5ff; }
+  .scene { scroll-snap-align: start; min-height: 100vh; }
+  .video-player { background: #0a0a0a; }
+  .neural-bg { background: radial-gradient(circle at 50% 50%, rgba(0,245,255,0.03) 0%, transparent 70%); }
+  .spoken-text { transition: all 0.3s ease; }
+  .spoken-text.active { color: #00f5ff; text-shadow: 0 0 20px #00f5ff; }
+</style>
 </head>
+<body class="bg-[#050505] text-white overflow-x-hidden">
 
-<body>
-  <canvas id="networkCanvas"></canvas>
-  <div class="grid-bg"></div>
-  <div class="progress" id="progress"></div>
+  <!-- Top Video Controls -->
+  <div class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-xl border-b border-white/10 px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-x-4">
+      <div class="flex items-center gap-x-2">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-[#00f5ff] to-[#39ff14] flex items-center justify-center">
+          <i class="fa-solid fa-brain text-black"></i>
+        </div>
+        <span class="font-display text-2xl tracking-tighter">VRAJ NEURAL REEL</span>
+      </div>
+      <div class="px-3 py-1 bg-white/10 rounded-full text-xs flex items-center gap-x-2">
+        <div class="w-2 h-2 bg-[#39ff14] rounded-full animate-pulse"></div>
+        <span class="font-mono text-[10px]">LIVE • SPEAKING MODE</span>
+      </div>
+    </div>
 
-  <header class="topbar">
-    <a href="#home" class="brand">
-      <span class="brand-mark">VD</span>
-      <span>Vraj Desai</span>
-    </a>
-
-    <nav id="nav">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>
-    </nav>
-
-    <a class="resume-btn" href="https://docs.google.com/document/d/1EQuJRdfpZ18raU9ZUloHMZZ4kJrOBDvwHV5ETxVl1N4/edit?tab=t.0" target="_blank" rel="noopener">
-      <i class="fa-solid fa-file-arrow-down"></i>
-      Resume
-    </a>
-
-    <button class="menu-btn" id="menuBtn" aria-label="Menu">
-      <i class="fa-solid fa-bars"></i>
-    </button>
-  </header>
-
-  <div class="rail">
-    <a href="#home" class="active"></a>
-    <a href="#about"></a>
-    <a href="#skills"></a>
-    <a href="#projects"></a>
-    <a href="#experience"></a>
-    <a href="#education"></a>
-    <a href="#certifications"></a>
-    <a href="#contact"></a>
+    <!-- Video Player Controls -->
+    <div class="flex items-center gap-x-2 text-sm">
+      <button onclick="toggleNarration()" id="play-btn"
+              class="px-6 py-2 bg-[#00f5ff] text-black font-semibold rounded-2xl flex items-center gap-x-2 hover:bg-white active:scale-[0.985]">
+        <i class="fa-solid fa-play" id="play-icon"></i>
+        <span id="play-text">PLAY MY STORY</span>
+      </button>
+      
+      <button onclick="nextScene()" class="px-4 py-2 border border-white/20 rounded-2xl hover:bg-white/5">Next Scene</button>
+      
+      <select id="voice-select" onchange="changeVoice()" class="bg-black border border-white/20 text-xs px-3 py-2 rounded-2xl">
+        <option value="en-US">English (US)</option>
+        <option value="en-GB">English (UK)</option>
+        <option value="en-AU">English (AU)</option>
+      </select>
+      
+      <input type="range" id="speed" min="0.8" max="1.8" step="0.1" value="1.1" 
+             class="w-20 accent-[#00f5ff]" onchange="changeSpeed()">
+      <span class="text-xs font-mono w-8" id="speed-value">1.1x</span>
+    </div>
   </div>
 
-  <div class="scene" id="scene">01 / Boot Sequence</div>
+  <!-- HERO / OPENING SCENE -->
+  <section class="scene flex items-center justify-center min-h-screen pt-16 neural-bg relative">
+    <div class="max-w-4xl text-center px-6">
+      <div class="inline-block px-5 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 text-sm">PERSONAL VIDEO MESSAGE • 2026</div>
+      
+      <h1 class="font-display text-7xl md:text-8xl tracking-tighter leading-none mb-4">
+        Hi, I’m Vraj.<br>
+        <span class="neon-cyan">This is my story.</span>
+      </h1>
+      <p class="text-2xl text-white/70 max-w-md mx-auto mb-10">Spoken directly to you. 5-second key moments. Interactive. Alive.</p>
+      
+      <button onclick="startFullExperience()" 
+              class="px-10 py-5 text-xl font-semibold bg-white text-black rounded-3xl flex items-center gap-x-3 mx-auto hover:bg-[#00f5ff]">
+        <i class="fa-solid fa-play mr-1"></i> START THE REEL (WITH MY VOICE)
+      </button>
+      <p class="text-xs text-white/40 mt-4">Click anywhere to begin the spoken journey • Works best on Chrome/Edge</p>
+    </div>
+  </section>
 
-  <main>
-    <section id="home" data-label="01 / Boot Sequence">
-      <div class="container hero-grid">
-        <div class="reveal">
-          <div class="kicker">
-            <i class="fa-solid fa-satellite-dish"></i>
-            IT Support · Endpoint · Automation
-          </div>
-
-          <h1 class="hero-title">
-            I fix.
-            <br>
-            I build.
-            <br>
-            <span>I automate.</span>
-          </h1>
-
-          <div class="typed-line">
-            <span id="typed"></span><span class="cursor"></span>
-          </div>
-
-          <p class="hero-copy">
-            I’m <strong>Vraj Desai</strong>, an IT Field Service Engineer based in Cork, Ireland —
-            Apple-trained, CCNA certified, Microsoft MD-102 certified, and currently supporting
-            enterprise IT operations on-site at Stryker via Pomeroy Technologies.
-          </p>
-
-          <div class="actions">
-            <a class="btn btn-primary" href="#projects">
-              <i class="fa-solid fa-play"></i>
-              Watch Portfolio Reel
-            </a>
-
-            <button class="btn btn-secondary" id="playStory">
-              <i class="fa-solid fa-forward"></i>
-              Auto-Play Story
-            </button>
-
-            <a class="btn btn-secondary" href="mailto:vrajdesai10@gmail.com">
-              <i class="fa-solid fa-envelope"></i>
-              Contact Me
-            </a>
-          </div>
-
-          <div class="stats">
-            <div class="stat">
-              <strong>6+</strong>
-              <span>Years IT Support</span>
-            </div>
-            <div class="stat">
-              <strong>45</strong>
-              <span>Retail Devices Supported</span>
-            </div>
-            <div class="stat">
-              <strong>20+</strong>
-              <span>AI Tickets Processed</span>
-            </div>
-            <div class="stat">
-              <strong>12+</strong>
-              <span>Incidents Tracked</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="command-card reveal">
-          <div class="window">
-            <div class="window-bar">
-              <div class="dots">
-                <span class="dot red"></span>
-                <span class="dot yellow"></span>
-                <span class="dot green"></span>
-              </div>
-              <div class="window-title">VD_COMMAND_CENTER.exe</div>
-            </div>
-
-            <div class="terminal">
-              <div class="terminal-line">
-                <span class="prompt">vraj@it-ops:~$</span>
-                boot portfolio-reel
-              </div>
-              <div class="terminal-line">
-                <span class="cyan">[OK]</span> ServiceNow queue loaded
-              </div>
-              <div class="terminal-line">
-                <span class="cyan">[OK]</span> Endpoint support profile verified
-              </div>
-              <div class="terminal-line">
-                <span class="amber">[AI]</span> N8N + Grok + Airtable workflows online
-              </div>
-              <div class="terminal-line">
-                <span class="cyan">[LIVE]</span> ITsupport_VD_Bot processing tickets
-              </div>
-              <div class="terminal-line">
-                <span class="cyan">[LIVE]</span> SystemMonitor_VD_Bot watching uptime
-              </div>
-              <div class="terminal-line">
-                <span class="prompt">status:</span>
-                available for IT Field Service / Endpoint / Automation roles
-              </div>
-
-              <div class="scan-grid">
-                <div class="scan-tile">
-                  <i class="fa-solid fa-server"></i>
-                  <span>Hardware</span>
-                </div>
-                <div class="scan-tile">
-                  <i class="fa-solid fa-network-wired"></i>
-                  <span>Networking</span>
-                </div>
-                <div class="scan-tile">
-                  <i class="fa-solid fa-robot"></i>
-                  <span>Automation</span>
-                </div>
-                <div class="scan-tile">
-                  <i class="fa-brands fa-windows"></i>
-                  <span>Microsoft 365</span>
-                </div>
-                <div class="scan-tile">
-                  <i class="fa-solid fa-ticket"></i>
-                  <span>ServiceNow</span>
-                </div>
-                <div class="scan-tile">
-                  <i class="fa-solid fa-shield-halved"></i>
-                  <span>SLA Focus</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+  <!-- SCENE 1: ORIGIN -->
+  <section id="scene1" class="scene flex items-center bg-[#0a0a0a] px-6 py-20">
+    <div class="max-w-5xl mx-auto">
+      <div class="uppercase tracking-[4px] text-xs text-[#39ff14] mb-2">SCENE 01 • 5 SECONDS</div>
+      <h2 class="font-display text-6xl tracking-tighter mb-8">I fix.<br>I build.<br>I automate.</h2>
+      
+      <div onclick="speakScene(1)" class="spoken-text cursor-pointer max-w-2xl text-2xl text-white/90 hover:text-[#00f5ff]">
+        “6+ years turning chaos into systems that actually work.”
       </div>
-    </section>
-
-    <section id="about" data-label="02 / Engineer Profile">
-      <div class="container">
-        <div class="reveal">
-          <div class="kicker">
-            <i class="fa-solid fa-user-gear"></i>
-            About Me
-          </div>
-
-          <h2 class="title">
-            From retail floor to <span>enterprise IT.</span>
-          </h2>
-
-          <p class="copy">
-            My career sits at the intersection of hands-on IT support, endpoint operations,
-            customer-facing service, and automation. I’m comfortable in a server room,
-            on a client site, inside a ServiceNow queue, or building workflows that remove repetitive manual work.
-          </p>
-        </div>
-
-        <div class="about-grid">
-          <aside class="card reveal">
-            <div class="avatar">VD</div>
-
-            <h3>Vraj Desai</h3>
-            <p>IT Field Service Engineer · Apple-Trained · CCNA · Microsoft 365 Endpoint Administrator</p>
-
-            <div class="info-list">
-              <a href="mailto:vrajdesai10@gmail.com">
-                <i class="fa-solid fa-envelope"></i>
-                vrajdesai10@gmail.com
-              </a>
-
-              <div>
-                <i class="fa-solid fa-location-dot"></i>
-                Cork, Ireland
-              </div>
-
-              <a href="tel:+353861653233">
-                <i class="fa-solid fa-phone"></i>
-                +353 86 165 3233
-              </a>
-
-              <a href="https://linkedin.com/in/vrajdesai-itsupport" target="_blank" rel="noopener">
-                <i class="fa-brands fa-linkedin"></i>
-                LinkedIn Profile
-              </a>
-            </div>
-
-            <div class="note">
-              Recruiter Snapshot: strong fit for IT Field Service, Endpoint Support,
-              Service Desk, Desktop Support, and IT Automation roles.
-            </div>
-          </aside>
-
-          <div class="card reveal">
-            <p>
-              I fix things, build things, and automate things that used to take people hours.
-              I have worked across Apple, Sainsbury’s, and now Stryker via Pomeroy Technologies,
-              supporting environments where uptime, documentation, and user experience matter.
-            </p>
-
-            <p>
-              At Sainsbury’s, I supported a 45-device retail technology estate in a store serving
-              around 10,000 customers per week. At Stryker, I’m embedded in an enterprise medical-device
-              environment covering break-fix repairs, hardware deployments, PC imaging, laptop builds,
-              mobile device enrolment, and ServiceNow incident management.
-            </p>
-
-            <p>
-              Outside work, I build live automation projects using N8N, Grok AI, Airtable,
-              Telegram bots, JavaScript, HTTP APIs, and ITSM logic. The goal is simple:
-              make IT support faster, more visible, and easier to scale.
-            </p>
-
-            <div class="highlight-row">
-              <div class="highlight">
-                <strong>Field</strong>
-                <span>Break-fix, imaging, deployments</span>
-              </div>
-              <div class="highlight">
-                <strong>Cloud</strong>
-                <span>Microsoft 365, Azure AD, endpoint admin</span>
-              </div>
-              <div class="highlight">
-                <strong>AI</strong>
-                <span>N8N, Grok AI, Airtable, Telegram</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      
+      <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div onclick="speakText('45 devices managed daily')" class="cursor-pointer p-6 bg-white/5 rounded-3xl hover:bg-white/10">45+ devices daily</div>
+        <div onclick="speakText('500 enterprise endpoints')" class="cursor-pointer p-6 bg-white/5 rounded-3xl hover:bg-white/10">500+ endpoints</div>
+        <div onclick="speakText('Zero data loss migrations')" class="cursor-pointer p-6 bg-white/5 rounded-3xl hover:bg-white/10">Zero data loss</div>
+        <div onclick="speakText('20 live automations shipped')" class="cursor-pointer p-6 bg-white/5 rounded-3xl hover:bg-white/10">20+ automations</div>
       </div>
-    </section>
-    
-    <section id="skills" data-label="03 / Skill Stack">
-      <div class="container">
-        <div class="reveal">
-          <div class="kicker">
-            <i class="fa-solid fa-layer-group"></i>
-            Skills & Abilities
-          </div>
+    </div>
+  </section>
 
-          <h2 class="title">
-            Practical skills. <span>Real support impact.</span>
-          </h2>
-
-          <p class="copy">
-            This is not just a buzzword list. These are the tools and environments I use to support
-            users, maintain endpoints, manage incidents, and automate support workflows.
-          </p>
-        </div>
-
-        <div class="skills-grid">
-          <div class="skill-card reveal">
-            <div class="skill-icon"><i class="fa-solid fa-network-wired"></i></div>
-            <h3>Networking & Infrastructure</h3>
-            <div class="tags">
-              <span class="tag">CCNA</span>
-              <span class="tag">Cisco Networking</span>
-              <span class="tag">Windows Server</span>
-              <span class="tag">Troubleshooting</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal">
-            <div class="skill-icon"><i class="fa-brands fa-microsoft"></i></div>
-            <h3>Endpoint & Microsoft</h3>
-            <div class="tags">
-              <span class="tag">Microsoft 365 Admin</span>
-              <span class="tag">MD-102</span>
-              <span class="tag">Active Directory</span>
-              <span class="tag">Azure AD</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal">
-            <div class="skill-icon"><i class="fa-solid fa-headset"></i></div>
-            <h3>Service Desk & ITSM</h3>
-            <div class="tags">
-              <span class="tag">ServiceNow</span>
-              <span class="tag">ITIL</span>
-              <span class="tag">SLA Support</span>
-              <span class="tag">Incident Management</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal">
-            <div class="skill-icon"><i class="fa-solid fa-robot"></i></div>
-            <h3>Automation & AI</h3>
-            <div class="tags">
-              <span class="tag">N8N</span>
-              <span class="tag">Grok AI</span>
-              <span class="tag">Airtable</span>
-              <span class="tag">Telegram Bots</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal">
-            <div class="skill-icon"><i class="fa-solid fa-code"></i></div>
-            <h3>Programming & Data</h3>
-            <div class="tags">
-              <span class="tag">Python</span>
-              <span class="tag">JavaScript</span>
-              <span class="tag">Data Analysis</span>
-              <span class="tag">GitHub</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal">
-            <div class="skill-icon"><i class="fa-solid fa-laptop-medical"></i></div>
-            <h3>Field Support</h3>
-            <div class="tags">
-              <span class="tag">Break-Fix</span>
-              <span class="tag">PC Imaging</span>
-              <span class="tag">Laptop Builds</span>
-              <span class="tag">Deployment</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal">
-            <div class="skill-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
-            <h3>Device Support</h3>
-            <div class="tags">
-              <span class="tag">Mobile Enrolment</span>
-              <span class="tag">macOS</span>
-              <span class="tag">Windows</span>
-              <span class="tag">POS Support</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal">
-            <div class="skill-icon"><i class="fa-solid fa-briefcase"></i></div>
-            <h3>Business Systems</h3>
-            <div class="tags">
-              <span class="tag">SAP S/4HANA</span>
-              <span class="tag">SAP ERP</span>
-              <span class="tag">Reporting</span>
-              <span class="tag">Stakeholder Support</span>
-            </div>
-          </div>
-        </div>
+  <!-- SCENE 2: FIELD OPS -->
+  <section id="scene2" class="scene flex items-center bg-[#111] px-6 py-20">
+    <div class="max-w-5xl mx-auto">
+      <div class="uppercase tracking-[4px] text-xs text-[#39ff14] mb-2">SCENE 02 • 5 SECONDS</div>
+      <h2 class="font-display text-6xl tracking-tighter mb-8">Where the real work happens</h2>
+      
+      <div onclick="speakScene(2)" class="spoken-text cursor-pointer text-3xl max-w-3xl leading-tight">
+        “From Apple retail to Stryker Fortune 500 — I keep the systems alive.”
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="projects" data-label="04 / Proof of Work">
-      <div class="container">
-        <div class="reveal">
-          <div class="kicker">
-            <i class="fa-solid fa-diagram-project"></i>
-            Projects
-          </div>
-
-          <h2 class="title">
-            Live systems, not just <span>portfolio cards.</span>
-          </h2>
-
-          <p class="copy">
-            These projects show what makes me different: I don’t only close tickets —
-            I build systems that classify, notify, monitor, log, and improve IT operations.
-          </p>
-        </div>
-
-        <div class="projects">
-          <article class="project-card featured reveal">
-            <div class="project-visual">
-              <span class="node n1"></span>
-              <span class="node n2"></span>
-              <span class="node n3"></span>
-            </div>
-            <div class="project-body">
-              <div class="meta">LIVE · ITsupport_VD_Bot</div>
-              <h3>AI-Powered IT Support Ticket Automation</h3>
-              <p>
-                Live N8N workflow using Grok AI to classify IT tickets by severity,
-                auto-log records to Airtable, and send real-time Telegram notifications.
-              </p>
-              <div class="tags">
-                <span class="tag">N8N</span>
-                <span class="tag">Grok AI</span>
-                <span class="tag">Airtable</span>
-                <span class="tag">Telegram Bot</span>
-                <span class="tag">20+ Tickets</span>
-              </div>
-              <div class="project-actions">
-                <a class="mini-link" href="https://vrajdesai1106.github.io/vrajdesaiportfolio/automation.html" target="_blank" rel="noopener">
-                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                  View Case Study
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card featured reveal">
-            <div class="project-visual">
-              <span class="node n1"></span>
-              <span class="node n2"></span>
-              <span class="node n3"></span>
-            </div>
-            <div class="project-body">
-              <div class="meta">LIVE · SystemMonitor_VD_Bot</div>
-              <h3>Automated System Health Checker</h3>
-              <p>
-                Real-time website monitoring with instant Telegram DOWN/RECOVERY alerts,
-                Airtable incident logging, JavaScript processing, and daily automated health digest.
-              </p>
-              <div class="tags">
-                <span class="tag">HTTP Monitoring</span>
-                <span class="tag">JavaScript</span>
-                <span class="tag">Airtable</span>
-                <span class="tag">12+ Incidents</span>
-                <span class="tag">&lt;5min Alerts</span>
-              </div>
-              <div class="project-actions">
-                <a class="mini-link" href="https://vrajdesai1106.github.io/vrajdesaiportfolio/automation.html" target="_blank" rel="noopener">
-                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                  View Case Study
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card reveal">
-            <div class="project-visual">
-              <span class="node n1"></span>
-              <span class="node n2"></span>
-              <span class="node n3"></span>
-            </div>
-            <div class="project-body">
-              <div class="meta">ML Web App</div>
-              <h3>Customer Churn Prediction</h3>
-              <p>Predicts whether a customer is likely to stop using a company’s service based on historical data.</p>
-              <div class="project-actions">
-                <a class="mini-link" href="https://vdesai1106-customer-churn-prediction.hf.space/" target="_blank" rel="noopener">
-                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                  Open App
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card reveal">
-            <div class="project-visual">
-              <span class="node n1"></span>
-              <span class="node n2"></span>
-              <span class="node n3"></span>
-            </div>
-            <div class="project-body">
-              <div class="meta">AI Screening Tool</div>
-              <h3>AI Loan Pre-Screener</h3>
-              <p>Predicts the likelihood of loan approval using personal, financial, and credit-related applicant inputs.</p>
-              <div class="project-actions">
-                <a class="mini-link" href="https://vdesai1106-loan-pre-screener.hf.space/" target="_blank" rel="noopener">
-                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                  Open App
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card reveal">
-            <div class="project-visual">
-              <span class="node n1"></span>
-              <span class="node n2"></span>
-              <span class="node n3"></span>
-            </div>
-            <div class="project-body">
-              <div class="meta">AI Estimator</div>
-              <h3>Property Value Estimator</h3>
-              <p>Estimates property value from input details, showing practical machine-learning use for decision support.</p>
-              <div class="project-actions">
-                <a class="mini-link" href="https://vdesai1106-property-value-estimator.hf.space/" target="_blank" rel="noopener">
-                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                  Open App
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card reveal">
-            <div class="project-visual">
-              <span class="node n1"></span>
-              <span class="node n2"></span>
-              <span class="node n3"></span>
-            </div>
-            <div class="project-body">
-              <div class="meta">Analytics Dashboard</div>
-              <h3>Demand Forecasting Dashboard</h3>
-              <p>Dashboard showing historical sales performance, customer insights, and future demand forecasting.</p>
-              <div class="project-actions">
-                <a class="mini-link" href="https://github.com/vrajdesai1106/Demand-Forecasting-Dashboard" target="_blank" rel="noopener">
-                  <i class="fa-brands fa-github"></i>
-                  GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-        </div>
+  <!-- SCENE 3: ARSENAL -->
+  <section id="scene3" class="scene flex items-center bg-[#0a0a0a] px-6 py-20">
+    <div class="max-w-5xl mx-auto">
+      <div class="uppercase tracking-[4px] text-xs text-[#39ff14] mb-2">SCENE 03 • 5 SECONDS</div>
+      <h2 class="font-display text-6xl tracking-tighter mb-8">My neural arsenal</h2>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div onclick="speakText('Field and endpoint mastery')" class="cursor-pointer p-8 bg-white/5 rounded-3xl">macOS • Windows • ServiceNow • MDM</div>
+        <div onclick="speakText('AI automation builder')" class="cursor-pointer p-8 bg-white/5 rounded-3xl">n8n • Grok AI • JavaScript • Telegram bots</div>
+        <div onclick="speakText('Certified and battle tested')" class="cursor-pointer p-8 bg-white/5 rounded-3xl">CCNA • MD-102 • SAP S/4HANA</div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="experience" data-label="05 / Career Timeline">
-      <div class="container">
-        <div class="reveal">
-          <div class="kicker">
-            <i class="fa-solid fa-timeline"></i>
-            Experience
-          </div>
-
-          <h2 class="title">
-            A timeline of <span>hands-on IT work.</span>
-          </h2>
-
-          <p class="copy">
-            Structured to show role, environment, tools, scope, and business impact quickly.
-          </p>
-        </div>
-
-        <div class="timeline">
-          <article class="timeline-item reveal">
-            <div class="timeline-dot">
-              <i class="fa-solid fa-building-shield"></i>
-            </div>
-            <div class="timeline-card">
-              <div class="timeline-top">
-                <div>
-                  <h3>IT Field Service Representative</h3>
-                  <div class="company">Pomeroy Technologies — on-site at Stryker Corporation | Cork, Ireland</div>
-                </div>
-                <div class="date">Mar 2026 – Present</div>
-              </div>
-              <ul>
-                <li>Embedded on-site at Stryker Corporation in a regulated enterprise environment.</li>
-                <li>Support break-fix repairs, hardware deployments, PC imaging, laptop builds, and mobile device enrolment.</li>
-                <li>Manage incidents through ServiceNow with clear ticket notes, ownership, and SLA focus.</li>
-                <li>Provide day-to-day field support across enterprise users, endpoints, and operational IT requests.</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="timeline-item reveal">
-            <div class="timeline-dot">
-              <i class="fa-brands fa-apple"></i>
-            </div>
-            <div class="timeline-card">
-              <div class="timeline-top">
-                <div>
-                  <h3>IT Support Specialist</h3>
-                  <div class="company">Apple | London</div>
-                </div>
-                <div class="date">Aug 2025 – Jan 2026</div>
-              </div>
-              <ul>
-                <li>Worked in a high-standard Apple support environment focused on fast diagnosis and user experience.</li>
-                <li>Strengthened troubleshooting discipline across Apple hardware, software, and customer-facing workflows.</li>
-                <li>Built confidence supporting technical issues in a fast-paced, quality-driven environment.</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="timeline-item reveal">
-            <div class="timeline-dot">
-              <i class="fa-solid fa-store"></i>
-            </div>
-            <div class="timeline-card">
-              <div class="timeline-top">
-                <div>
-                  <h3>IT Systems Support</h3>
-                  <div class="company">Sainsbury’s | London</div>
-                </div>
-                <div class="date">Nov 2019 – Apr 2026</div>
-              </div>
-              <ul>
-                <li>Maintained a 45-device retail technology estate supporting daily store operations.</li>
-                <li>Resolved issues across POS terminals, endpoint devices, peripherals, and operational systems.</li>
-                <li>Supported a busy retail environment serving around 10,000 customers per week.</li>
-                <li>Protected business continuity by responding quickly to floor-impacting technical issues.</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="timeline-item reveal">
-            <div class="timeline-dot">
-              <i class="fa-solid fa-chart-line"></i>
-            </div>
-            <div class="timeline-card">
-              <div class="timeline-top">
-                <div>
-                  <h3>Junior Data Analyst</h3>
-                  <div class="company">Bluegrey Technologies | London</div>
-                </div>
-                <div class="date">Jun 2019 – Sep 2019</div>
-              </div>
-              <ul>
-                <li>Supported data analysis, reporting, and business insight tasks.</li>
-                <li>Built early experience in structured data handling and analytical thinking.</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="timeline-item reveal">
-            <div class="timeline-dot">
-              <i class="fa-solid fa-database"></i>
-            </div>
-            <div class="timeline-card">
-              <div class="timeline-top">
-                <div>
-                  <h3>Junior Data Analyst</h3>
-                  <div class="company">Etech Global Services | Gujarat</div>
-                </div>
-                <div class="date">Oct 2016 – May 2019</div>
-              </div>
-              <ul>
-                <li>Worked with datasets, reports, and operational analysis in a service-driven environment.</li>
-                <li>Developed a foundation in accuracy, documentation, customer service, and process improvement.</li>
-              </ul>
-            </div>
-          </article>
-        </div>
+  <!-- FINAL SCENE -->
+  <section id="scene4" class="scene flex items-center justify-center bg-[#050505] px-6 py-20 min-h-[80vh]">
+    <div class="max-w-3xl text-center">
+      <div class="uppercase tracking-[4px] text-xs text-[#39ff14] mb-4">FINAL SCENE</div>
+      <h2 class="font-display text-7xl tracking-tighter mb-6">Ready to build the future together?</h2>
+      <p class="text-2xl text-white/70 mb-10">Cork, Ireland • Open to Field Service, Endpoint &amp; Automation roles</p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="mailto:vrajdesai10@gmail.com" class="px-10 py-4 bg-[#00f5ff] text-black rounded-3xl font-semibold flex items-center justify-center gap-x-3">Email Me</a>
+        <a href="tel:+353861653233" class="px-10 py-4 border border-white/30 rounded-3xl font-semibold flex items-center justify-center gap-x-3">+353 86 165 3233</a>
       </div>
-    </section>
-
-    <section id="education" data-label="06 / Education">
-      <div class="container">
-        <div class="reveal">
-          <div class="kicker">
-            <i class="fa-solid fa-graduation-cap"></i>
-            Education
-          </div>
-
-          <h2 class="title">
-            Business thinking with <span>data discipline.</span>
-          </h2>
-
-          <p class="copy">
-            My education gives me a mix of business management, analytics, and practical problem-solving.
-          </p>
-        </div>
-
-        <div class="two-col">
-          <article class="edu-card reveal">
-            <i class="fa-solid fa-chart-pie"></i>
-            <h3>MSc International Business Management with Data Analytics</h3>
-            <p>University of Bedfordshire | Luton, England</p>
-            <p>Graduated: 2024</p>
-          </article>
-
-          <article class="edu-card reveal">
-            <i class="fa-solid fa-briefcase"></i>
-            <h3>BA Hons Business & Management</h3>
-            <p>University of the West of England | Bristol, England</p>
-            <p>Graduated: 2022</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="certifications" data-label="07 / Credentials">
-      <div class="container">
-        <div class="reveal">
-          <div class="kicker">
-            <i class="fa-solid fa-certificate"></i>
-            Certifications
-          </div>
-
-          <h2 class="title">
-            Verified learning. <span>Practical direction.</span>
-          </h2>
-
-          <p class="copy">
-            These credentials strengthen my profile across networking, endpoint administration,
-            service desk fundamentals, SAP systems, and analytics.
-          </p>
-        </div>
-
-        <div class="cert-grid">
-          <article class="cert-card reveal">
-            <i class="fa-solid fa-network-wired"></i>
-            <h3>Cisco Certified Network Associate</h3>
-            <p>Jan 2026 | Cisco</p>
-            <a href="https://cp.certmetrics.com/cisco/en/public/verify/credential/4c0af13602594d09b1d7121d3004f730" target="_blank" rel="noopener">
-              Verify <i class="fa-solid fa-arrow-up-right-from-square"></i>
-            </a>
-          </article>
-
-          <article class="cert-card reveal">
-            <i class="fa-brands fa-microsoft"></i>
-            <h3>MD-102 Endpoint Administrator Associate</h3>
-            <p>Sept 2025 | Microsoft</p>
-            <a href="https://learn.microsoft.com/en-gb/users/vrajkishorkumardesai-7758/transcript/v2zxsqx9jj3k33v" target="_blank" rel="noopener">
-              Verify <i class="fa-solid fa-arrow-up-right-from-square"></i>
-            </a>
-          </article>
-
-          <article class="cert-card reveal">
-            <i class="fa-solid fa-gears"></i>
-            <h3>SAP S/4HANA Essential Training</h3>
-            <p>Feb 2026 | LinkedIn</p>
-          </article>
-
-          <article class="cert-card reveal">
-            <i class="fa-solid fa-gears"></i>
-            <h3>SAP S/4HANA: Beyond the Basics</h3>
-            <p>Feb 2026 | LinkedIn</p>
-          </article>
-
-          <article class="cert-card reveal">
-            <i class="fa-solid fa-database"></i>
-            <h3>SAP ERP Essential Training</h3>
-            <p>Feb 2026 | LinkedIn</p>
-          </article>
-
-          <article class="cert-card reveal">
-            <i class="fa-solid fa-headset"></i>
-            <h3>IT Service Desk: Customer Service Fundamentals</h3>
-            <p>Jan 2025 | LinkedIn</p>
-          </article>
-
-          <article class="cert-card reveal">
-            <i class="fa-solid fa-chart-simple"></i>
-            <h3>Data Analytics</h3>
-            <p>Sept 2024 | EDOXI</p>
-          </article>
-
-          <article class="cert-card reveal">
-            <i class="fa-solid fa-wifi"></i>
-            <h3>Networking Essentials</h3>
-            <p>Feb 2024 | Cisco</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" data-label="08 / Connect">
-      <div class="container">
-        <div class="reveal">
-          <div class="kicker">
-            <i class="fa-solid fa-paper-plane"></i>
-            Contact
-          </div>
-
-          <h2 class="title">
-            Need someone who can <span>support and automate IT?</span>
-          </h2>
-
-          <p class="copy">
-            Let’s connect for IT Field Service, Desktop Support, Endpoint Support,
-            Service Desk, IT Automation, or hybrid infrastructure-support opportunities.
-          </p>
-        </div>
-
-        <div class="contact-grid">
-          <div class="card reveal">
-            <h3>Contact Details</h3>
-            <p>
-              Based in Cork, Ireland. Available for relevant IT support, field service,
-              endpoint, service desk, and automation opportunities.
-            </p>
-
-            <div class="info-list">
-              <div>
-                <i class="fa-solid fa-location-dot"></i>
-                Cork, Ireland
-              </div>
-
-              <a href="mailto:vrajdesai10@gmail.com">
-                <i class="fa-solid fa-envelope"></i>
-                vrajdesai10@gmail.com
-              </a>
-
-              <a href="tel:+353861653233">
-                <i class="fa-solid fa-phone"></i>
-                +353 86 165 3233
-              </a>
-
-              <a href="tel:+447309793100">
-                <i class="fa-solid fa-phone"></i>
-                +44 7309 793100
-              </a>
-
-              <a href="https://linkedin.com/in/vrajdesai-itsupport" target="_blank" rel="noopener">
-                <i class="fa-brands fa-linkedin"></i>
-                linkedin.com/in/vrajdesai-itsupport
-              </a>
-
-              <a href="https://docs.google.com/document/d/1EQuJRdfpZ18raU9ZUloHMZZ4kJrOBDvwHV5ETxVl1N4/edit?tab=t.0" target="_blank" rel="noopener">
-                <i class="fa-solid fa-file-arrow-down"></i>
-                Download Resume
-              </a>
-            </div>
-
-            <button class="btn btn-primary copy-btn" id="copyEmail">
-              <i class="fa-solid fa-copy"></i>
-              Copy Email
-            </button>
-          </div>
-
-          <div class="window reveal">
-            <div class="window-bar">
-              <div class="dots">
-                <span class="dot red"></span>
-                <span class="dot yellow"></span>
-                <span class="dot green"></span>
-              </div>
-              <div class="window-title">recruiter_message.txt</div>
-            </div>
-
-            <div class="terminal">
-              <div class="terminal-line">
-                <span class="prompt">recruiter@company:~$</span>
-                why_vraj
-              </div>
-              <div class="terminal-line">
-                <span class="cyan">01.</span> Enterprise field support experience
-              </div>
-              <div class="terminal-line">
-                <span class="cyan">02.</span> Apple-trained troubleshooting mindset
-              </div>
-              <div class="terminal-line">
-                <span class="cyan">03.</span> CCNA + Microsoft MD-102 credentials
-              </div>
-              <div class="terminal-line">
-                <span class="cyan">04.</span> ServiceNow, endpoint, imaging, deployment experience
-              </div>
-              <div class="terminal-line">
-                <span class="cyan">05.</span> Builds live AI automation systems, not theory
-              </div>
-              <div class="terminal-line">
-                <span class="prompt">next_step:</span>
-                schedule interview
-              </div>
-              <div class="terminal-line">
-                <span class="amber">message:</span>
-                “Ready to support users, protect uptime, and automate repetitive work.”
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    Designed and built for <strong>Vraj Desai</strong> · Keep Rising · <span id="year"></span>
-  </footer>
+    </div>
+  </section>
 
   <script>
-    const menuBtn = document.getElementById("menuBtn");
-    const nav = document.getElementById("nav");
+    let utterance = null;
+    let isPlaying = false;
+    let currentScene = 1;
+    let synth = window.speechSynthesis;
 
-    menuBtn.addEventListener("click", () => {
-      nav.classList.toggle("open");
-      menuBtn.innerHTML = nav.classList.contains("open")
-        ? '<i class="fa-solid fa-xmark"></i>'
-        : '<i class="fa-solid fa-bars"></i>';
-    });
-
-    document.querySelectorAll("nav a").forEach(link => {
-      link.addEventListener("click", () => {
-        nav.classList.remove("open");
-        menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
-      });
-    });
-
-    const progress = document.getElementById("progress");
-
-    function updateProgress() {
-      const top = window.scrollY;
-      const height = document.documentElement.scrollHeight - window.innerHeight;
-      progress.style.width = height > 0 ? (top / height) * 100 + "%" : "0%";
+    function speakText(text, rate = 1.1) {
+      if (synth.speaking) synth.cancel();
+      
+      utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = rate;
+      utterance.pitch = 1.05;
+      utterance.volume = 0.95;
+      
+      const voices = synth.getVoices();
+      const selectedVoice = document.getElementById('voice-select').value;
+      const voice = voices.find(v => v.lang.includes(selectedVoice));
+      if (voice) utterance.voice = voice;
+      
+      synth.speak(utterance);
     }
 
-    window.addEventListener("scroll", updateProgress);
-    updateProgress();
-
-    const sections = document.querySelectorAll("section");
-    const revealEls = document.querySelectorAll(".reveal");
-    const navLinks = document.querySelectorAll("nav a");
-    const railLinks = document.querySelectorAll(".rail a");
-    const scene = document.getElementById("scene");
-
-    const revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        }
-      });
-    }, { threshold: 0.14 });
-
-    revealEls.forEach(el => revealObserver.observe(el));
-
-    const sectionObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          const label = entry.target.dataset.label || "";
-          scene.textContent = label;
-
-          navLinks.forEach(a => {
-            a.classList.toggle("active", a.getAttribute("href") === "#" + id);
-          });
-
-          railLinks.forEach(a => {
-            a.classList.toggle("active", a.getAttribute("href") === "#" + id);
-          });
-        }
-      });
-    }, { threshold: 0.55 });
-
-    sections.forEach(section => sectionObserver.observe(section));
-
-    const typed = document.getElementById("typed");
-    const phrases = [
-      "IT Field Service Engineer",
-      "Apple-Trained Support Specialist",
-      "CCNA + Microsoft MD-102 Certified",
-      "N8N · Grok AI · Airtable Automation Builder",
-      "ServiceNow · Endpoint · Field Support"
-    ];
-
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
-
-    function typeLoop() {
-      const phrase = phrases[phraseIndex];
-
-      if (!deleting) {
-        typed.textContent = phrase.slice(0, charIndex + 1);
-        charIndex++;
-
-        if (charIndex === phrase.length) {
-          deleting = true;
-          setTimeout(typeLoop, 1200);
-          return;
-        }
-      } else {
-        typed.textContent = phrase.slice(0, charIndex - 1);
-        charIndex--;
-
-        if (charIndex === 0) {
-          deleting = false;
-          phraseIndex = (phraseIndex + 1) % phrases.length;
-        }
-      }
-
-      setTimeout(typeLoop, deleting ? 35 : 68);
+    function speakScene(sceneNum) {
+      const texts = {
+        1: "6 plus years turning chaos into systems that actually work. 45 devices managed daily. 500 enterprise endpoints. Zero data loss.",
+        2: "From Apple retail keeping 45 devices alive for 10,000 customers a week, to Stryker Fortune 500 medical devices. I keep the systems alive.",
+        3: "Field and endpoint mastery. AI automation builder using n8n, Grok AI, and JavaScript. Certified and battle tested with CCNA and MD-102."
+      };
+      speakText(texts[sceneNum] || "This is Vraj's neural reel.");
     }
 
-    typeLoop();
+    function toggleNarration() {
+      const btn = document.getElementById('play-btn');
+      const icon = document.getElementById('play-icon');
+      const text = document.getElementById('play-text');
 
-    const playStory = document.getElementById("playStory");
-    let storyPlaying = false;
-    let storyTimer = null;
-
-    playStory.addEventListener("click", () => {
-      storyPlaying = !storyPlaying;
-
-      if (storyPlaying) {
-        playStory.innerHTML = '<i class="fa-solid fa-pause"></i> Pause Story';
-        let i = 0;
-
-        storyTimer = setInterval(() => {
-          i = (i + 1) % sections.length;
-          sections[i].scrollIntoView({ behavior: "smooth", block: "start" });
-
-          if (i === sections.length - 1) {
-            clearInterval(storyTimer);
-            storyPlaying = false;
-            playStory.innerHTML = '<i class="fa-solid fa-forward"></i> Auto-Play Story';
-          }
-        }, 3200);
+      if (!isPlaying) {
+        isPlaying = true;
+        icon.classList.remove('fa-play');
+        icon.classList.add('fa-pause');
+        text.textContent = "PAUSE STORY";
+        startFullExperience();
       } else {
-        clearInterval(storyTimer);
-        playStory.innerHTML = '<i class="fa-solid fa-forward"></i> Auto-Play Story';
+        isPlaying = false;
+        icon.classList.remove('fa-pause');
+        icon.classList.add('fa-play');
+        text.textContent = "PLAY MY STORY";
+        if (synth.speaking) synth.cancel();
       }
-    });
+    }
 
-    const copyEmail = document.getElementById("copyEmail");
+    function startFullExperience() {
+      if (synth.speaking) synth.cancel();
+      
+      const scenes = [1, 2, 3, 4];
+      let index = 0;
 
-    copyEmail.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText("vrajdesai10@gmail.com");
-        copyEmail.innerHTML = '<i class="fa-solid fa-check"></i> Email Copied';
+      function playNext() {
+        if (index >= scenes.length || !isPlaying) return;
+        
+        const sceneEl = document.getElementById('scene' + scenes[index]);
+        if (sceneEl) sceneEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        speakScene(scenes[index]);
+        
         setTimeout(() => {
-          copyEmail.innerHTML = '<i class="fa-solid fa-copy"></i> Copy Email';
-        }, 1600);
-      } catch (error) {
-        window.location.href = "mailto:vrajdesai10@gmail.com";
+          index++;
+          playNext();
+        }, 5200); // ~5 seconds per scene
       }
+      
+      isPlaying = true;
+      document.getElementById('play-icon').classList.remove('fa-play');
+      document.getElementById('play-icon').classList.add('fa-pause');
+      document.getElementById('play-text').textContent = "PAUSE STORY";
+      
+      playNext();
+    }
+
+    function nextScene() {
+      currentScene = (currentScene % 4) + 1;
+      const sceneEl = document.getElementById('scene' + currentScene);
+      if (sceneEl) sceneEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      speakScene(currentScene);
+    }
+
+    function changeVoice() {
+      // Voice will be applied on next speak
+    }
+
+    function changeSpeed() {
+      const speed = document.getElementById('speed').value;
+      document.getElementById('speed-value').textContent = speed + 'x';
+    }
+
+    // Keyboard support
+    document.addEventListener('keydown', function(e) {
+      if (e.key === ' ' || e.key === 'k') {
+        e.preventDefault();
+        toggleNarration();
+      }
+      if (e.key === 'ArrowRight') nextScene();
     });
 
-    document.getElementById("year").textContent = new Date().getFullYear();
+    // Load voices
+    window.speechSynthesis.onvoiceschanged = () => {};
 
-    const canvas = document.getElementById("networkCanvas");
-    const ctx = canvas.getContext("2d");
-    let width;
-    let height;
-    let particles = [];
-
-    function resizeCanvas() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-
-      const count = Math.min(90, Math.floor((width * height) / 18000));
-
-      particles = Array.from({ length: count }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.42,
-        vy: (Math.random() - 0.5) * 0.42,
-        r: Math.random() * 1.8 + 0.7
-      }));
-    }
-
-    function drawNetwork() {
-      ctx.clearRect(0, 0, width, height);
-
-      for (const p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(34,211,238,0.62)";
-        ctx.fill();
-      }
-
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const a = particles[i];
-          const b = particles[j];
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 135) {
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(34,211,238,${0.13 * (1 - distance / 135)})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-        }
-      }
-
-      requestAnimationFrame(drawNetwork);
-    }
-
-    resizeCanvas();
-    drawNetwork();
-    window.addEventListener("resize", resizeCanvas);
+    // Easter egg: click logo to hear a special line
+    console.log('%c[NEURAL REEL] Speaking portfolio ready. Einstein would approve.', 'color:#00f5ff');
   </script>
 </body>
 </html>
